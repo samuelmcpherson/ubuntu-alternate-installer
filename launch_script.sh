@@ -4,6 +4,13 @@ export ROOTPASS=$1
 
 export USERPASS=$2
 
+# environment prep
+
+apt install -y debootstrap gdisk zfs-initramfs vim
+
+systemctl stop zed
+
+
 source ./script-variables.sh
 
 menuStart()
