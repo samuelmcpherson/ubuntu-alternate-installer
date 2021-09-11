@@ -4,7 +4,7 @@ export ROOTPASS=$1
 
 export USERPASS=$2
 
-source ./main-variables.sh
+source ./script-variables.sh
 
 menuStart()
 {
@@ -468,7 +468,7 @@ fi
 done
 }
 
-echo "Start $(date +%Y-%m-%d_%H:%M)" >> "$OUTPUTLOG-log.txt"
+echo "Start $(date +%Y-%m-%d_%H:%M)"
 
 if [ -n "$ZFS" ] && [ -z "$RPART" ] && [ -z "$BPART" ] && [ -n "$DISK1" ] && [ -n "$DISK2" ]
 then
@@ -477,7 +477,7 @@ then
     export CURRENTARGS=$DISK1
     echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
     menuStart
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS
 
@@ -485,7 +485,7 @@ then
     export CURRENTFUNC="diskFormat.sh"
     export CURRENTARGS=$DISK2
 	menuPreSystem
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS
 
@@ -493,7 +493,7 @@ then
     export CURRENTFUNC="bpoolSetup.sh"
     export CURRENTARGS="$DISK1-part2 $DISK2-part2"
     menuPreSystem
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS    
 
@@ -501,7 +501,7 @@ then
     export CURRENTFUNC="rpoolSetup.sh"
     export CURRENTARGS="$DISK1-part3 $DISK2-part3"
     menuPreSystem
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS
 
@@ -519,7 +519,7 @@ then
     export CURRENTARGS=$DISK1
     echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
     menuStart
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS
 
@@ -527,7 +527,7 @@ then
     export CURRENTFUNC="bpoolSetup.sh"
     export CURRENTARGS="$DISK1-part2"
     menuPreSystem
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS 
 
@@ -535,7 +535,7 @@ then
     export CURRENTFUNC="rpoolSetup.sh"
     export CURRENTARGS="$DISK1-part3"
     menuPreSystem
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS
 
@@ -551,7 +551,7 @@ then
     export CURRENTARGS=$BPART
     echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
     menuStart
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS
     
@@ -559,7 +559,7 @@ then
     export CURRENTFUNC="rpoolSetup.sh"
     export CURRENTARGS=$RPART
     menuPreSystem
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS
    
@@ -572,7 +572,7 @@ then
     export CURRENTARGS=$DISK1
     echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
     menuStart
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS
 
@@ -601,7 +601,7 @@ then
 export CURRENTFUNC="createZfsDatasets.sh"
 export CURRENTARGS=
 menuPreSystem
-logExport
+
 export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
@@ -617,7 +617,7 @@ zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTF
 fi
 
 menuPreSystemPostZfs
-logExport
+
 export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
@@ -633,7 +633,7 @@ zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTF
 fi
 
 menuPreSystemPostZfs
-logExport
+
 export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
@@ -648,7 +648,7 @@ zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTF
 fi
 
 menuFull
-logExport
+
 export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
@@ -662,7 +662,7 @@ zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTF
 fi
 
 menuFull
-logExport
+
 export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
@@ -676,7 +676,7 @@ zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTF
 fi
 
 menuFull
-logExport
+
 export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
@@ -690,7 +690,7 @@ zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTF
 fi
 
 menuFull
-logExport
+
 export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
@@ -705,7 +705,7 @@ zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTF
 fi
 
 menuFull
-logExport
+
 export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
@@ -722,7 +722,7 @@ then
     fi
     
     menuFull
-    logExport
+    
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS
 

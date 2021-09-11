@@ -3,7 +3,7 @@
 ### Required vars:
 export TEMPMOUNT=/mnt
 
-export HOSTNAME=ubuntu-IT-laptop-MBP11
+export HOSTNAME=ubuntu-thinkpad-430
 
 export TIMEOUT=20 # number of seconds before selecting the default menu option
 
