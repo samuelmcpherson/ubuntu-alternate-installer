@@ -1,17 +1,10 @@
 #!/bin/bash
 
-export ROOTPASS=$1
+export USER=$1
 
 export USERPASS=$2
 
-# environment prep
-
-apt install -y debootstrap gdisk zfs-initramfs vim
-
-systemctl stop zed
-
-
-source ./script-variables.sh
+export ROOTPASS=$3
 
 menuStart()
 {
@@ -46,8 +39,8 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) ./subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim ./subScripts/$CURRENTFUNC ;;
+  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
+  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
   3) /bin/bash ;;
   4) break ;;
   5) exit 1 ;;
@@ -110,8 +103,8 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) ./subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim ./subScripts/$CURRENTFUNC ;;
+  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
+  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
   3) /bin/bash ;;
   4) break ;;
   5) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuPreSystemPrev ;;
@@ -175,8 +168,8 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) ./subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim ./subScripts/$CURRENTFUNC ;;
+  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
+  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
   3) /bin/bash ;;
   4) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
   5) exit 1 ;;
@@ -241,9 +234,9 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) ./subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim ./subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; ./zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; ./zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; ./subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
+  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) break ;;
   6) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuPreSystemPostZfsPrev ;;
@@ -308,9 +301,9 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) ./subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim ./subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; ./zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; ./zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; ./subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
+  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
   6) exit 1 ;;
@@ -376,9 +369,9 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) ./subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim ./subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; ./zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; ./zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; ./subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
+  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) chroot $TEMPMOUNT /bin/bash ;;
   6) break ;;
@@ -443,9 +436,9 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) ./subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim ./subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; ./zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; ./zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; ./subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
+  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) chroot $TEMPMOUNT /bin/bash ;;
   6) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
@@ -475,12 +468,20 @@ fi
 done
 }
 
+# environment prep
+
+apt install -y debootstrap gdisk zfs-initramfs vim
+
+systemctl stop zed
+
+source ./script-variables.sh
+
 echo "Start $(date +%Y-%m-%d_%H:%M)"
 
 if [ -n "$ZFS" ] && [ -z "$RPART" ] && [ -z "$BPART" ] && [ -n "$DISK1" ] && [ -n "$DISK2" ]
 then
 
-    export CURRENTFUNC="diskFormat.sh"
+    export CURRENTFUNC="baseSystem/diskFormat.sh"
     export CURRENTARGS=$DISK1
     echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
     menuStart
@@ -489,7 +490,7 @@ then
     export LASTARGS=$CURRENTARGS
 
 
-    export CURRENTFUNC="diskFormat.sh"
+    export CURRENTFUNC="baseSystem/diskFormat.sh"
     export CURRENTARGS=$DISK2
 	menuPreSystem
     
@@ -497,16 +498,49 @@ then
     export LASTARGS=$CURRENTARGS
 
 
-    export CURRENTFUNC="bpoolSetup.sh"
-    export CURRENTARGS="$DISK1-part2 $DISK2-part2"
-    menuPreSystem
+    export CURRENTFUNC="baseSystem/bpoolSetup.sh"
     
+    if [ -n "$EFI" ] && [ -z "$BIOS" ]
+    then
+
+        export CURRENTARGS="$DISK1-part2 $DISK2-part2"
+    
+    elif [ -z "$EFI" ] && [ -n "$BIOS" ]
+    then
+
+        export CURRENTARGS="$DISK1-part1 $DISK2-part1"
+
+    else
+
+        echo "Variables for EFI or BIOS install are both unset, aborting..."
+        exit 1
+
+    fi
+
+    menuPreSystem
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS    
 
 
-    export CURRENTFUNC="rpoolSetup.sh"
-    export CURRENTARGS="$DISK1-part3 $DISK2-part3"
+    export CURRENTFUNC="baseSystem/rpoolSetup.sh"
+
+    if [ -n "$EFI" ] && [ -z "$BIOS" ]
+    then
+
+        export CURRENTARGS="$DISK1-part3 $DISK2-part3"
+    
+    elif [ -z "$EFI" ] && [ -n "$BIOS" ]
+    then
+
+        export CURRENTARGS="$DISK1-part2 $DISK2-part2"
+
+    else
+    
+        echo "Variables for EFI or BIOS install are both unset, aborting..."
+        exit 1
+
+    fi
+
     menuPreSystem
     
     export LASTFUNC=$CURRENTFUNC
@@ -522,7 +556,7 @@ then
 elif [ -n "$ZFS" ] && [ -z "$RPART" ] && [ -z "$BPART" ] && [ -n "$DISK1" ] && [ -z "$DISK2" ]
 then
 
-    export CURRENTFUNC="diskFormat.sh"
+    export CURRENTFUNC="baseSystem/diskFormat.sh"
     export CURRENTARGS=$DISK1
     echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
     menuStart
@@ -531,16 +565,50 @@ then
     export LASTARGS=$CURRENTARGS
 
 
-    export CURRENTFUNC="bpoolSetup.sh"
-    export CURRENTARGS="$DISK1-part2"
+    export CURRENTFUNC="baseSystem/bpoolSetup.sh"
+
+    if [ -n "$EFI" ] && [ -z "$BIOS" ]
+    then
+
+        export CURRENTARGS="$DISK1-part2"
+    
+    elif [ -z "$EFI" ] && [ -n "$BIOS" ]
+    then
+
+        export CURRENTARGS="$DISK1-part1"
+
+    else
+    
+        echo "Variables for EFI or BIOS install are both unset, aborting..."
+        exit 1
+
+    fi
+
     menuPreSystem
     
     export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS 
 
 
-    export CURRENTFUNC="rpoolSetup.sh"
-    export CURRENTARGS="$DISK1-part3"
+    export CURRENTFUNC="baseSystem/rpoolSetup.sh"
+
+    if [ -n "$EFI" ] && [ -z "$BIOS" ]
+    then
+
+        export CURRENTARGS="$DISK1-part3"
+    
+    elif [ -z "$EFI" ] && [ -n "$BIOS" ]
+    then
+
+        export CURRENTARGS="$DISK1-part2"
+
+    else
+    
+        echo "Variables for EFI or BIOS install are both unset, aborting..."
+        exit 1
+
+    fi
+
     menuPreSystem
     
     export LASTFUNC=$CURRENTFUNC
@@ -554,7 +622,7 @@ then
 elif [ -n "$ZFS" ] && [ -n "$RPART" ] && [ -n "$BPART" ] && [ -z "$DISK1" ] && [ -z "$DISK2" ] 
 then
     
-    export CURRENTFUNC="bpoolSetup.sh"
+    export CURRENTFUNC="baseSystem/bpoolSetup.sh"
     export CURRENTARGS=$BPART
     echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
     menuStart
@@ -563,7 +631,7 @@ then
     export LASTARGS=$CURRENTARGS
     
 
-    export CURRENTFUNC="rpoolSetup.sh"
+    export CURRENTFUNC="baseSystem/rpoolSetup.sh"
     export CURRENTARGS=$RPART
     menuPreSystem
     
@@ -575,7 +643,7 @@ elif [ -z "$ZFS" ]
 then 
 
 
-    export CURRENTFUNC="diskFormat.sh"
+    export CURRENTFUNC="baseSystem/diskFormat.sh"
     export CURRENTARGS=$DISK1
     echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
     menuStart
@@ -605,7 +673,7 @@ fi
 if [ -n "$ZFS" ]
 then
 
-export CURRENTFUNC="createZfsDatasets.sh"
+export CURRENTFUNC="baseSystem/createZfsDatasets.sh"
 export CURRENTARGS=
 menuPreSystem
 
@@ -615,7 +683,7 @@ export LASTARGS=$CURRENTARGS
 fi
 # -------------------------------------- zfs rollback able at this point
 
-export CURRENTFUNC="bootstrap.sh"
+export CURRENTFUNC="baseSystem/bootstrap.sh"
 export CURRENTARGS=
 
 if [ -n "$ZFS" ]
@@ -631,7 +699,7 @@ export LASTARGS=$CURRENTARGS
 
 
 
-export CURRENTFUNC="systemMounts.sh"
+export CURRENTFUNC="baseSystem/systemMounts.sh"
 export CURRENTARGS=
 
 if [ -n "$ZFS" ]
@@ -646,7 +714,7 @@ export LASTARGS=$CURRENTARGS
 
 # ----------------------------- chrootable from this point
 
-export CURRENTFUNC="baseChrootConfig.sh"
+export CURRENTFUNC="baseSystem/baseChrootConfig.sh"
 export CURRENTARGS=
 
 if [ -n "$ZFS" ]
@@ -660,7 +728,7 @@ export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
 
-export CURRENTFUNC="packageInstallBase.sh"
+export CURRENTFUNC="baseSystem/packageInstallBase.sh"
 export CURRENTARGS=
 
 if [ -n "$ZFS" ]
@@ -674,7 +742,7 @@ export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
 
-export CURRENTFUNC="systemConfigPostInstall.sh"
+export CURRENTFUNC="baseSystem/systemConfigPostInstall.sh"
 export CURRENTARGS=
 
 if [ -n "$ZFS" ]
@@ -688,7 +756,7 @@ export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
 
-export CURRENTFUNC="userSetup.sh"
+export CURRENTFUNC="baseSystem/userSetup.sh"
 export CURRENTARGS=
 
 if [ -n "$ZFS" ]
@@ -702,8 +770,7 @@ export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
 
-
-export CURRENTFUNC="bootSetup.sh"
+export CURRENTFUNC="baseSystem/bootSetup.sh"
 export CURRENTARGS=
 
 if [ -n "$ZFS" ]
@@ -720,7 +787,7 @@ export LASTARGS=$CURRENTARGS
 if [ -n "$MIRROR" ] && [ -n "$EFI" ]
 then
 
-    export CURRENTFUNC="syncEFIs.sh"
+    export CURRENTFUNC="baseSystem/syncEFIs.sh"
     export CURRENTARGS=
     
     if [ -n "$ZFS" ]
@@ -739,5 +806,160 @@ if [ -n "$ZFS" ]
     then
     zfs snapshot -r rpool@base-install; zfs snapshot -r bpool@base-install
 fi
+
+echo '#########################################################################################'
+echo '#########################################################################################'
+echo 'Minimal base system has been successfully installed, now performing extra configurations'
+echo '#########################################################################################'
+echo '#########################################################################################'
+
+if [ -n "$ZFS" ]
+then
+
+    export CURRENTFUNC="extraConfiguration/createExtraZfsDatasets.sh"
+    export CURRENTARGS=
+
+
+    if [ -n "$ZFS" ]
+    then
+        zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    fi
+
+    menuFull
+
+    export LASTFUNC=$CURRENTFUNC
+    export LASTARGS=$CURRENTARGS
+
+fi
+
+
+export CURRENTFUNC="extraConfiguration/generalConfigurations.sh"
+export CURRENTARGS=
+
+if [ -n "$ZFS" ]
+then
+    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+fi
+
+menuFull
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
+
+
+export CURRENTFUNC="extraConfiguration/packageInstallBase.sh"
+export CURRENTARGS=
+
+if [ -n "$ZFS" ]
+then
+    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+fi
+
+menuFull
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
+
+
+export CURRENTFUNC="extraConfiguration/packageInstallAnsible.sh"
+export CURRENTARGS=
+
+if [ -n "$ZFS" ]
+then
+    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+fi
+
+menuFull
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
+
+
+export CURRENTFUNC="extraConfiguration/packageInstallDocker.sh"
+export CURRENTARGS=
+
+if [ -n "$ZFS" ]
+then
+    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+fi
+
+menuFull
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
+
+
+export CURRENTFUNC="extraConfiguration/packageInstallKDE.sh"
+export CURRENTARGS=
+
+if [ -n "$ZFS" ]
+then
+    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+fi
+
+menuFull
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
+
+
+export CURRENTFUNC="extraConfiguration/packageInstallDesktop.sh"
+export CURRENTARGS=
+
+if [ -n "$ZFS" ]
+then
+    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+fi
+
+menuFull
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
+
+
+export CURRENTFUNC="extraConfiguration/packageInstallGames.sh"
+export CURRENTARGS=
+
+if [ -n "$ZFS" ]
+then
+    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+fi
+
+menuFull
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
+
+
+export CURRENTFUNC="extraConfiguration/userSetupKDE.sh"
+export CURRENTARGS=
+
+if [ -n "$ZFS" ]
+then
+    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+fi
+
+menuFull
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
+
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
+
+
+export CURRENTFUNC="extraConfiguration/userSetupDesktop.sh"
+export CURRENTARGS=
+
+if [ -n "$ZFS" ]
+then
+    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+fi
+
+menuFull
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
 
 exit 0

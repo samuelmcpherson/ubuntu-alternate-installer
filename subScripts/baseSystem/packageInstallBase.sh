@@ -22,7 +22,7 @@ then
     chroot $TEMPMOUNT /bin/bash -c "apt -y install grub-efi-amd64 grub-efi-amd64-signed && echo '---> apt install grub-efi-amd64 grub-efi-amd64-signed succeeded <--------------------------------------------------------------' || { echo 'apt install grub-efi-amd64 grub-efi-amd64-signed failed'; exit 1; }" || exit 1
 fi
 
-chroot $TEMPMOUNT /bin/bash -c "apt -y install rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https && echo '---> apt install rsync dosfstools openssh-server zsh curl patch apt-file update-manager-core software-properties-common apt-transport-https succeeded <--------------------------------------------------------------' || { echo 'apt install rsync dosfstools openssh-server zsh curl patch apt-file update-manager-core software-properties-common apt-transport-https failed'; exit 1; }" || exit 1
+chroot $TEMPMOUNT /bin/bash -c "apt -y install rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https && echo '---> apt install rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https succeeded <--------------------------------------------------------------' || { echo 'apt install rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https failed'; exit 1; }" || exit 1
 
 if [ -n "$SECUREBOOT" ]
 then
