@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd $TEMPMOUNT/home/$USER && git clone $CONFIGREPO
+
 cp $CONFIGDIR/etc/ssh/ssh_config $TEMPMOUNT/etc/ssh/ssh_config
 
 cp $CONFIGDIR/etc/ssh/sshd_config $TEMPMOUNT/etc/ssh/sshd_config
