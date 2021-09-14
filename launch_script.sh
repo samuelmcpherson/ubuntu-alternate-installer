@@ -236,7 +236,7 @@ fi
 case $n in
   1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
   2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) break ;;
   6) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuPreSystemPostZfsPrev ;;
@@ -303,7 +303,7 @@ fi
 case $n in
   1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
   2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
   6) exit 1 ;;
@@ -371,7 +371,7 @@ fi
 case $n in
   1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
   2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) chroot $TEMPMOUNT /bin/bash ;;
   6) break ;;
@@ -438,7 +438,7 @@ fi
 case $n in
   1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
   2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC-$CURRENTARGS; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) chroot $TEMPMOUNT /bin/bash ;;
   6) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
@@ -688,7 +688,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuPreSystemPostZfs
@@ -704,7 +704,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuPreSystemPostZfs
@@ -719,7 +719,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -733,7 +733,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -747,7 +747,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -761,7 +761,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -775,7 +775,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -792,7 +792,7 @@ then
     
     if [ -n "$ZFS" ]
     then
-    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
     fi
     
     menuFull
@@ -822,7 +822,7 @@ then
 
     if [ -n "$ZFS" ]
     then
-        zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+        zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
     fi
 
     menuFull
@@ -838,7 +838,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -852,7 +852,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -866,7 +866,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -880,7 +880,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -894,7 +894,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -908,7 +908,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -922,7 +922,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -936,7 +936,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
@@ -954,7 +954,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC-$CURRENTARGS; zfs snapshot -r bpool@$CURRENTFUNC-$CURRENTARGS
+    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
 fi
 
 menuFull
