@@ -12,12 +12,12 @@ RUNCOUNT=0
 while true
 do    
 n=
-if (( $RUNCOUNT < 1 ))
+if (( RUNCOUNT < 1 ))
 then 
 DEFAULT=1
 echo "Starting installation: $CURRENTFUNC $CURRENTARGS is the current function to run."
 echo ""
-elif (( $RUNCOUNT >= 1 ))
+elif (( RUNCOUNT >= 1 ))
 then 
 DEFAULT=4
 else 
@@ -33,14 +33,14 @@ echo "  3)Open Shell to live environment"
 echo "  4)Skip running $CURRENTFUNC $CURRENTARGS and continue to next function" 
 echo "  5)Abort install"
 
-read -t $TIMEOUT n
+read -rt $TIMEOUT n
 if [ -z "$n" ]
 then
     n=$DEFAULT
 fi
 case $n in
-  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
   3) /bin/bash ;;
   4) break ;;
   5) exit 1 ;;
@@ -49,7 +49,7 @@ esac
 
 echo ''
 
-CURRENTFUNCSTATUS=${PIPESTATUS[0]}
+CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -63,7 +63,7 @@ then
         echo ""
         echo "$CURRENTFUNC $CURRENTARGS ran and SUCCEEDED"
         echo ""
-        RUNCOUNT=$(($RUNCOUNT + 1))
+        RUNCOUNT=$((RUNCOUNT + 1))
     fi
 fi
 done
@@ -75,12 +75,12 @@ RUNCOUNT=0
 while true
 do    
 n=
-if (( $RUNCOUNT < 1 ))
+if (( RUNCOUNT < 1 ))
 then 
 DEFAULT=1
 echo "$LASTFUNC $LASTARGS was the previous function. $CURRENTFUNC $CURRENTARGS is the current function to run."
 echo ""
-elif (( $RUNCOUNT >= 1 ))
+elif (( RUNCOUNT >= 1 ))
 then 
 DEFAULT=4
 else 
@@ -97,14 +97,14 @@ echo "  4)Skip running $CURRENTFUNC $CURRENTARGS and continue to next function"
 echo "  5)Go back to $LASTFUNC $LASTARGS"
 echo "  6)Abort install"
 
-read -t $TIMEOUT n
+read -rt $TIMEOUT n
 if [ -z "$n" ]
 then
     n=$DEFAULT
 fi
 case $n in
-  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
   3) /bin/bash ;;
   4) break ;;
   5) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuPreSystemPrev ;;
@@ -114,7 +114,7 @@ esac
 
 echo ''
 
-CURRENTFUNCSTATUS=${PIPESTATUS[0]}
+CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -129,7 +129,7 @@ then
         echo ""
         echo "$CURRENTFUNC $CURRENTARGS ran and SUCCEEDED"
         echo ""
-        RUNCOUNT=$(($RUNCOUNT + 1))
+        RUNCOUNT=$((RUNCOUNT + 1))
     fi
 fi
 done
@@ -141,12 +141,12 @@ RUNCOUNT=0
 while true
 do    
 n=
-if (( $RUNCOUNT < 1 ))
+if (( RUNCOUNT < 1 ))
 then 
 DEFAULT=1
 echo "$LASTFUNC $LASTARGS was the previous function. $CURRENTFUNC $CURRENTARGS is the current function to run."
 echo ""
-elif (( $RUNCOUNT >= 1 ))
+elif (( RUNCOUNT >= 1 ))
 then 
 DEFAULT=4
 else 
@@ -162,14 +162,14 @@ echo "  3)Open Shell to live environment"
 echo "  4)Skip forward to $NEXTFUNC $NEXTARGS" 
 echo "  5)Abort install"
 
-read -t $TIMEOUT n
+read -rt $TIMEOUT n
 if [ -z "$n" ]
 then
     n=$DEFAULT
 fi
 case $n in
-  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
   3) /bin/bash ;;
   4) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
   5) exit 1 ;;
@@ -178,7 +178,7 @@ esac
 
 echo ''
 
-CURRENTFUNCSTATUS=${PIPESTATUS[0]}
+CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -193,7 +193,7 @@ then
         echo ""
         echo "$CURRENTFUNC $CURRENTARGS ran and SUCCEEDED"
         echo ""
-        RUNCOUNT=$(($RUNCOUNT + 1))
+        RUNCOUNT=$((RUNCOUNT + 1))
     fi
 fi
 done
@@ -205,12 +205,12 @@ RUNCOUNT=0
 while true
 do    
 n=
-if (( $RUNCOUNT < 1 ))
+if (( RUNCOUNT < 1 ))
 then 
 DEFAULT=1
 echo "$LASTFUNC $LASTARGS was the previous function. $CURRENTFUNC $CURRENTARGS is the current function to run."
 echo ""
-elif (( $RUNCOUNT >= 1 ))
+elif (( RUNCOUNT >= 1 ))
 then 
 DEFAULT=5
 else 
@@ -228,15 +228,15 @@ echo "  5)Skip running $CURRENTFUNC $CURRENTARGS and continue to next function"
 echo "  6)Go back to $LASTFUNC $LASTARGS"
 echo "  7)Abort install"
 
-read -t $TIMEOUT n
+read -rt $TIMEOUT n
 if [ -z "$n" ]
 then
     n=$DEFAULT
 fi
 case $n in
-  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/zfs-recursive-restore.sh bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) break ;;
   6) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuPreSystemPostZfsPrev ;;
@@ -246,7 +246,7 @@ esac
 
 echo ''
 
-CURRENTFUNCSTATUS=${PIPESTATUS[0]}
+CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -261,7 +261,7 @@ then
         echo ""
         echo "$CURRENTFUNC $CURRENTARGS ran and SUCCEEDED"
         echo ""
-        RUNCOUNT=$(($RUNCOUNT + 1))
+        RUNCOUNT=$((RUNCOUNT + 1))
     fi
 fi
 done
@@ -273,12 +273,12 @@ RUNCOUNT=0
 while true
 do    
 n=
-if (( $RUNCOUNT < 1 ))
+if (( RUNCOUNT < 1 ))
 then 
 DEFAULT=1
 echo "$LASTFUNC $LASTARGS was the previous function. $CURRENTFUNC $CURRENTARGS is the current function to run."
 echo ""
-elif (( $RUNCOUNT >= 1 ))
+elif (( RUNCOUNT >= 1 ))
 then 
 DEFAULT=5
 else 
@@ -295,15 +295,15 @@ echo "  4)Open Shell to live environment"
 echo "  5)Skip forward to $NEXTFUNC $NEXTARGS" 
 echo "  6)Abort install"
 
-read -t $TIMEOUT n
+read -rt $TIMEOUT n
 if [ -z "$n" ]
 then
     n=$DEFAULT
 fi
 case $n in
-  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/zfs-recursive-restore.sh bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
   6) exit 1 ;;
@@ -312,7 +312,7 @@ esac
 
 echo ''
 
-CURRENTFUNCSTATUS=${PIPESTATUS[0]}
+CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -327,7 +327,7 @@ then
         echo ""
         echo "$CURRENTFUNC $CURRENTARGS ran and SUCCEEDED"
         echo ""
-        RUNCOUNT=$(($RUNCOUNT + 1))
+        RUNCOUNT=$((RUNCOUNT + 1))
     fi
 fi
 done
@@ -339,12 +339,12 @@ RUNCOUNT=0
 while true
 do    
 n=
-if (( $RUNCOUNT < 1 ))
+if (( RUNCOUNT < 1 ))
 then 
 DEFAULT=1
 echo "$LASTFUNC $LASTARGS was the previous function. $CURRENTFUNC $CURRENTARGS is the current function to run."
 echo ""
-elif (( $RUNCOUNT >= 1 ))
+elif (( RUNCOUNT >= 1 ))
 then 
 DEFAULT=6
 else 
@@ -363,15 +363,15 @@ echo "  6)Skip running $CURRENTFUNC $CURRENTARGS and continue to next function"
 echo "  7)Go back to $LASTFUNC $LASTARGS"
 echo "  8)Abort install"
 
-read -t $TIMEOUT n
+read -rt $TIMEOUT n
 if [ -z "$n" ]
 then
     n=$DEFAULT
 fi
 case $n in
-  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/zfs-recursive-restore.sh bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) chroot $TEMPMOUNT /bin/bash ;;
   6) break ;;
@@ -381,7 +381,7 @@ esac
 
 echo ''
 
-CURRENTFUNCSTATUS=${PIPESTATUS[0]}
+CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -396,7 +396,7 @@ then
         echo ""
         echo "$CURRENTFUNC $CURRENTARGS ran and SUCCEEDED"
         echo ""
-        RUNCOUNT=$(($RUNCOUNT + 1))
+        RUNCOUNT=$((RUNCOUNT + 1))
     fi
 fi
 done
@@ -408,11 +408,11 @@ RUNCOUNT=0
 while true
 do    
 n=
-if (( $RUNCOUNT < 1 ))
+if (( RUNCOUNT < 1 ))
 then 
 DEFAULT=1
 echo "$LASTFUNC $LASTARGS was the previous function. $CURRENTFUNC $CURRENTARGS is the current function to run."
-elif (( $RUNCOUNT >= 1 ))
+elif (( RUNCOUNT >= 1 ))
 then 
 DEFAULT=6
 else 
@@ -430,15 +430,15 @@ echo "  5)Open chroot to current install"
 echo "  6)Skip forward to $NEXTFUNC $NEXTARGS" 
 echo "  7)Abort install"
 
-read -t $TIMEOUT n
+read -rt $TIMEOUT n
 if [ -z "$n" ]
 then
     n=$DEFAULT
 fi
 case $n in
-  1) $SCRIPTDIR/subScripts/$CURRENTFUNC $CURRENTARGS $@ ;;
-  2) vim $SCRIPTDIR/subScripts/$CURRENTFUNC ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@$CURRENTFUNC; $SCRIPTDIR/zfs-recursive-restore.sh bpool@$CURRENTFUNC; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/zfs-recursive-restore.sh bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) chroot $TEMPMOUNT /bin/bash ;;
   6) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
@@ -447,7 +447,7 @@ esac
 
 echo ''
 
-CURRENTFUNCSTATUS=${PIPESTATUS[0]}
+CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -462,7 +462,7 @@ then
         echo ""
         echo "$CURRENTFUNC $CURRENTARGS ran and SUCCEEDED"
         echo ""
-        RUNCOUNT=$(($RUNCOUNT + 1))
+        RUNCOUNT=$((RUNCOUNT + 1))
     fi
 fi
 done
@@ -688,7 +688,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuPreSystemPostZfs
@@ -704,7 +704,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuPreSystemPostZfs
@@ -719,7 +719,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -733,7 +733,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -747,7 +747,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -761,7 +761,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -775,7 +775,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -792,7 +792,7 @@ then
     
     if [ -n "$ZFS" ]
     then
-    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
     
     menuFull
@@ -822,7 +822,7 @@ then
 
     if [ -n "$ZFS" ]
     then
-        zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
 
     menuFull
@@ -838,7 +838,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -852,7 +852,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -866,7 +866,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -880,7 +880,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -894,7 +894,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -908,7 +908,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -922,7 +922,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -936,7 +936,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -954,7 +954,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@$CURRENTFUNC; zfs snapshot -r bpool@$CURRENTFUNC
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull

@@ -35,7 +35,7 @@ fi
 
 #chroot $TEMPMOUNT /bin/bash -c "cp /home/$USER/$SCRIPTREPO/files/dotfiles/.config/kdeglobals /home/$USER/.config/"
 
-cp $WORKDIR/$FILEREPO/wallpaper/* $TEMPMOUNT/usr/share/wallpapers
+cp $CONFIGDIR/wallpaper/* $TEMPMOUNT/usr/share/wallpapers
 
 chroot $TEMPMOUNT /bin/bash -c "chown -R $USER:users /home/$USER"
 

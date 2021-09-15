@@ -58,7 +58,7 @@ fi
 
 chroot $TEMPMOUNT /bin/bash -c "usermod -s $ROOTSHELL root"
 
-if [ "$ROOTSHELL" = "/bin/zsh" ]
+if [[ "$ROOTSHELL" = "/bin/zsh" || "$ROOTSHELL" = "/usr/bin/zsh" ]]
 then
     cp $CONFIGDIR/home/.zshrc $TEMPMOUNT/root
 
@@ -71,9 +71,9 @@ then
     chroot $TEMPMOUNT /bin/bash -c "chown -R root:root /root"
 fi
 
-chroot $TEMPMOUNT /bin/bash -c "usermod -s $SHELL $USER"
+chroot $TEMPMOUNT /bin/bash -c "usermod -s $USERSHELL $USER"
 
-if [ "$SHELL" = "/bin/zsh" ]
+if [[ "$USERSHELL" = "/bin/zsh" || "$USERSHELL" = "/usr/bin/zsh" ]]
 then
     cp $CONFIGDIR/home/.zshrc $TEMPMOUNT/home/$USER/
 
@@ -83,5 +83,3 @@ then
 
     chroot $TEMPMOUNT /bin/bash -c "chown -R $USER:users /home/$USER"
 fi
-
-chroot $TEMPMOUNT /bin/bash -c "
