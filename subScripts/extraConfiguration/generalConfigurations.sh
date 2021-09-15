@@ -9,6 +9,8 @@ cp $CONFIGDIR/etc/ssh/sshd_config $TEMPMOUNT/etc/ssh/sshd_config
 if [ -n "$ZFS" ]
 then
 
+    mkdir $TEMPMOUNT/etc/sanoid
+    
     cp $CONFIGDIR/etc/sanoid/ubuntu/sanoid.conf $TEMPMOUNT/etc/sanoid/sanoid.conf
 
     cp $SCRIPTDIR/zfs-recursive-restore.sh $TEMPMOUNT/usr/bin

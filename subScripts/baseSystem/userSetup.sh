@@ -2,7 +2,10 @@
 
 chroot $TEMPMOUNT /bin/bash -c "addgroup --system lxd"
 
-chroot $TEMPMOUNT /bin/bash -c "mkdir /home/$USER"
+if [[ -z "/home/$USER" ]]
+then
+    chroot $TEMPMOUNT /bin/bash -c "mkdir /home/$USER"
+fi
 
 chroot $TEMPMOUNT /bin/bash -c "useradd -M -g users -G sudo,adm,lxd,plugdev,dip,cdrom -s /bin/bash -d /home/$USER $USER"
 
