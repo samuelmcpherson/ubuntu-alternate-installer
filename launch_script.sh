@@ -860,106 +860,132 @@ menuFull
 export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
-
-export CURRENTFUNC="extraConfiguration/packageInstallAnsible.sh"
-export CURRENTARGS=
-
-if [ -n "$ZFS" ]
+if [ -n "$ANSIBLE" ]
 then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+
+    export CURRENTFUNC="extraConfiguration/packageInstallAnsible.sh"
+    export CURRENTARGS=
+
+    if [ -n "$ZFS" ]
+    then
+        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    fi
+
+    menuFull
+
+    export LASTFUNC=$CURRENTFUNC
+    export LASTARGS=$CURRENTARGS
+
 fi
 
-menuFull
 
-export LASTFUNC=$CURRENTFUNC
-export LASTARGS=$CURRENTARGS
-
-
-export CURRENTFUNC="extraConfiguration/packageInstallDocker.sh"
-export CURRENTARGS=
-
-if [ -n "$ZFS" ]
+if [ -n "$DOCKER" ]
 then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    export CURRENTFUNC="extraConfiguration/packageInstallDocker.sh"
+    export CURRENTARGS=
+
+    if [ -n "$ZFS" ]
+    then
+        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    fi
+
+    menuFull
+
+    export LASTFUNC=$CURRENTFUNC
+    export LASTARGS=$CURRENTARGS
+
 fi
 
-menuFull
 
-export LASTFUNC=$CURRENTFUNC
-export LASTARGS=$CURRENTARGS
-
-
-export CURRENTFUNC="extraConfiguration/packageInstallKDE.sh"
-export CURRENTARGS=
-
-if [ -n "$ZFS" ]
+if [ -n "$KDE" ]
 then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    export CURRENTFUNC="extraConfiguration/packageInstallKDE.sh"
+    export CURRENTARGS=
+
+    if [ -n "$ZFS" ]
+    then
+        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    fi
+
+    menuFull
+
+    export LASTFUNC=$CURRENTFUNC
+    export LASTARGS=$CURRENTARGS
+
 fi
 
-menuFull
 
-export LASTFUNC=$CURRENTFUNC
-export LASTARGS=$CURRENTARGS
-
-
-export CURRENTFUNC="extraConfiguration/packageInstallDesktop.sh"
-export CURRENTARGS=
-
-if [ -n "$ZFS" ]
+if [ -n "$DESKTOP" ]
 then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    export CURRENTFUNC="extraConfiguration/packageInstallDesktop.sh"
+    export CURRENTARGS=
+
+    if [ -n "$ZFS" ]
+    then
+        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    fi
+
+    menuFull
+
+    export LASTFUNC=$CURRENTFUNC
+    export LASTARGS=$CURRENTARGS
+
 fi
 
-menuFull
 
-export LASTFUNC=$CURRENTFUNC
-export LASTARGS=$CURRENTARGS
-
-
-export CURRENTFUNC="extraConfiguration/packageInstallGames.sh"
-export CURRENTARGS=
-
-if [ -n "$ZFS" ]
+if [ -n "$GAMES" ]
 then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    export CURRENTFUNC="extraConfiguration/packageInstallGames.sh"
+    export CURRENTARGS=
+
+    if [ -n "$ZFS" ]
+    then
+        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    fi
+
+    menuFull
+
+    export LASTFUNC=$CURRENTFUNC
+    export LASTARGS=$CURRENTARGS
+
 fi
 
-menuFull
 
-export LASTFUNC=$CURRENTFUNC
-export LASTARGS=$CURRENTARGS
-
-
-export CURRENTFUNC="extraConfiguration/userSetupKDE.sh"
-export CURRENTARGS=
-
-if [ -n "$ZFS" ]
+if [ -n "$KDE" ]
 then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    export CURRENTFUNC="extraConfiguration/userSetupKDE.sh"
+    export CURRENTARGS=
+
+    if [ -n "$ZFS" ]
+    then
+        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    fi
+
+    menuFull
+
+    export LASTFUNC=$CURRENTFUNC
+    export LASTARGS=$CURRENTARGS
+
 fi
 
-menuFull
 
-export LASTFUNC=$CURRENTFUNC
-export LASTARGS=$CURRENTARGS
-
-
-export LASTFUNC=$CURRENTFUNC
-export LASTARGS=$CURRENTARGS
-
-
-export CURRENTFUNC="extraConfiguration/userSetupDesktop.sh"
-export CURRENTARGS=
-
-if [ -n "$ZFS" ]
+if [ -n "$DESKTOP" ]
 then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+
+    export CURRENTFUNC="extraConfiguration/userSetupDesktop.sh"
+    export CURRENTARGS=
+
+    if [ -n "$ZFS" ]
+    then
+        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    fi
+
+    menuFull
+
+    export LASTFUNC=$CURRENTFUNC
+    export LASTARGS=$CURRENTARGS
+
 fi
 
-menuFull
-
-export LASTFUNC=$CURRENTFUNC
-export LASTARGS=$CURRENTARGS
 
 exit 0

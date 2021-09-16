@@ -1,19 +1,19 @@
 #!/bin/bash
 
-chroot $TEMPMOUNT /bin/bash -c "usermod -aG audio,video,games,input $USER" #wireshark
+#chroot $TEMPMOUNT /bin/bash -c "usermod -aG audio,video,games,input $USER" #wireshark
 
-cp -r $CONFIGDIR/home/.config/gebaar $TEMPMOUNT/home/$USER/.config/gebaar
+#cp -r $CONFIGDIR/home/.config/gebaar $TEMPMOUNT/home/$USER/.config/gebaar
 
-if [ -n "$HIDPI" ]
-then
-    cp $CONFIGDIR/home/hidpi/conky/.conkyrc $TEMPMOUNT/home/$USER/
+#if [ -n "$HIDPI" ]
+#then
+#    cp $CONFIGDIR/home/hidpi/.conkyrc $TEMPMOUNT/home/$USER/
 
-    cp $CONFIGDIR/home/hidpi/conky/.conkyrc2 $TEMPMOUNT/home/$USER/
-else
-    cp $CONFIGDIR/home/conky/.conkyrc $TEMPMOUNT/home/$USER/
+#    cp $CONFIGDIR/home/hidpi/.conkyrc2 $TEMPMOUNT/home/$USER/
+#else
+#    cp $CONFIGDIR/home/.conkyrc $TEMPMOUNT/home/$USER/
 
-    cp $CONFIGDIR/home/conky/.conkyrc2 $TEMPMOUNT/home/$USER/
-fi
+#    cp $CONFIGDIR/home/.conkyrc2 $TEMPMOUNT/home/$USER/
+#fi
 
 #cp -r $CONFIGDIR/home/.config/autostart/ $TEMPMOUNT/home/$USER/.config/autostart
 
@@ -21,16 +21,16 @@ chroot $TEMPMOUNT /bin/bash -c "chown -R $USER:users /home/$USER"
 
 chroot $TEMPMOUNT su - $USER -c "systemctl --user enable psd.service"
 
-chroot $TEMPMOUNT su - $USER -c "cd /home/$USER && git clone https://github.com/osleg/gebaar-libinput-fork.git"
+#chroot $TEMPMOUNT su - $USER -c "cd /home/$USER && git clone https://github.com/osleg/gebaar-libinput-fork.git"
 
-chroot $TEMPMOUNT su - $USER -c "cd /home/$USER/gebaar-libinput-fork  && git checkout v0.1.4 && git submodule update --init"
+#chroot $TEMPMOUNT su - $USER -c "cd /home/$USER/gebaar-libinput-fork  && git checkout v0.1.4 && git submodule update --init"
 
-sleep 2
+#sleep 2
 
-chroot $TEMPMOUNT su - $USER -c "mkdir /home/$USER/gebaar-libinput-fork/build && cd /home/$USER/gebaar-libinput-fork/build && cmake .. && make -j$(nproc)"
+#chroot $TEMPMOUNT su - $USER -c "mkdir /home/$USER/gebaar-libinput-fork/build && cd /home/$USER/gebaar-libinput-fork/build && cmake .. && make -j$(nproc)"
 
-sleep 2
+#sleep 2
 
 #chroot $TEMPMOUNT /bin/bash -c "cd /home/$USER/gebaar-libinput-fork/build && make install"
 
-sleep 3
+#sleep 3

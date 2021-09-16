@@ -1,18 +1,18 @@
 #!/bin/bash
 
 
-if [ -n "$HIDPI" ]
-then
-    cp -r $CONFIGDIR/home/hidpi/kde/.local/ $TEMPMOUNT/home/$USER/
-    cp -r $CONFIGDIR/home/hidpi/kde/.config/ $TEMPMOUNT/home/$USER/
-    cp -r $CONFIGDIR/home/hidpi/kde/.icons/ $TEMPMOUNT/home/$USER/
-    cp -r $CONFIGDIR/home/hidpi/kde/.kde/ $TEMPMOUNT/home/$USER/
-else
-    cp -r $CONFIGDIR/home/kde/.local/ $TEMPMOUNT/home/$USER/
-    cp -r $CONFIGDIR/home/kde/.config/ $TEMPMOUNT/home/$USER/
-    cp -r $CONFIGDIR/home/kde/.icons/ $TEMPMOUNT/home/$USER/
-    cp -r $CONFIGDIR/home/kde/.kde/ $TEMPMOUNT/home/$USER/
-fi
+#if [ -n "$HIDPI" ]
+#then
+#    cp -r $CONFIGDIR/home/hidpi/kde/.local/ $TEMPMOUNT/home/$USER/
+#    cp -r $CONFIGDIR/home/hidpi/kde/.config/ $TEMPMOUNT/home/$USER/
+#    cp -r $CONFIGDIR/home/hidpi/kde/.icons/ $TEMPMOUNT/home/$USER/
+#    cp -r $CONFIGDIR/home/hidpi/kde/.kde/ $TEMPMOUNT/home/$USER/
+#else
+#    cp -r $CONFIGDIR/home/kde/.local/ $TEMPMOUNT/home/$USER/
+#    cp -r $CONFIGDIR/home/kde/.config/ $TEMPMOUNT/home/$USER/
+#    cp -r $CONFIGDIR/home/kde/.icons/ $TEMPMOUNT/home/$USER/
+#    cp -r $CONFIGDIR/home/kde/.kde/ $TEMPMOUNT/home/$USER/
+#fi
 #chroot $TEMPMOUNT /bin/bash -c "cp -r /home/$USER/$SCRIPTREPO/files/dotfiles/.local/share/konsole/ /home/$USER/.local/share/"
 
 #chroot $TEMPMOUNT /bin/bash -c "cp -r /home/$USER/$SCRIPTREPO/files/dotfiles/.local/share/plasma/desktoptheme/ghost-blue-dark/ /home/$USER/.local/share/plasma/desktoptheme/"

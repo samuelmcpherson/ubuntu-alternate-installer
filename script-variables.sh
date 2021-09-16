@@ -87,7 +87,7 @@ export SURFACE=
 
 export MACBOOKPRO=
 
-export GAMES=yes
+export GAMES=
 
 export KDE=yes
 
