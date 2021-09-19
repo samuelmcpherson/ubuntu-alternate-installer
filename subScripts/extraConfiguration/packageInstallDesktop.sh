@@ -15,7 +15,7 @@ chroot $TEMPMOUNT /bin/bash -c "wget -qO - https://protonmail.com/download/bridg
 
 chroot $TEMPMOUNT /bin/bash -c "echo 'deb https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main' >> /etc/apt/sources.list.d/vscodium.list"
 
-chroot $TEMPMOUNT /bin/bash -c "cd /tmp && wget -O protonmail-bridge.deb 'https://protonmail.com/download/protonmail-bridge_1.5.7-1_amd64.deb'"
+chroot $TEMPMOUNT /bin/bash -c "cd /tmp && wget -O protonmail-bridge.deb 'https://protonmail.com/download/protonmail-bridge_1.8.9-1_amd64.deb'"
 
 chroot $TEMPMOUNT /bin/bash -c "cd /tmp && wget -O discord.deb 'https://discordapp.com/api/download?platform=linux&format=deb'"
 
