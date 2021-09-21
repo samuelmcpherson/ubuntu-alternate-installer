@@ -17,7 +17,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 ### Required vars:
 
-export HOSTNAME=ubuntu-thinkpad-430
+export HOSTNAME=IT-laptop-MBP12
 
 export TIMEOUT=20 # number of seconds before selecting the default menu option
 
@@ -40,23 +40,22 @@ export BIOS=
 export EFI=yes
 
 export ZFS=yes
-#existing partitions
 
-export EFIPART=
+# existing partitions
 
-export BPART=
+    export EFIPART=/dev/disk/by-id/
 
-export RPART=
+    export BPART=/dev/disk/by-id/
 
-#nuke and pave
+    export RPART=/dev/disk/by-id/
 
-export MIRROR=mirror
+# Format and partition whole disk(s)
 
-export DISK1=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S2RANB0HA26883V
+    export MIRROR=
 
-export DISK2=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAGB51863E
+    export DISK1=
 
-export EFIPART_2=
+    export DISK2=
 
 export RELEASE=hirsute # groovy, focal or hirsute
 
@@ -64,7 +63,7 @@ export LANG=en_US.UTF-8
 
 export TIMEZONE=America/Los_Angeles
 
-export SECUREBOOT=yes
+export SECUREBOOT=
 
 # extra variables to futher customize the install after a minimal base is in place
 
@@ -73,23 +72,39 @@ export CONFIGREPO="https://github.com/samuelmcpherson/config-files.git"
 
 export CONFIGDIR="$TEMPMOUNT/home/$USER/$(echo $CONFIGREPO | cut -d '/' -f5 | sed -r 's/.{4}$//')"
 
-export HIDPI=
-
-export ANSIBLE=yes
+export ANSIBLE=
 
 export DOCKER=
 
 export DESKTOP=yes
 
-export TOUCH=
+    export KDE=yes
+        
+        export PARACHUTE=yes
 
-export SURFACE=
+        export KROHNKITE=yes
+    
+    export GESTURES=yes
 
-export MACBOOKPRO=
+    export TOUCH=
 
-export GAMES=
+    export HIDPI=yes
 
-export KDE=yes
+    export THINKPAD=
+
+        export THINKPADTRACKPOINT=
+
+    export SURFACE=
+
+    export MAC=yes
+
+        export FNKEYMODESWAP=yes
+
+        export ALTCMDKEYSWAP=yes
+
+        export APPLETOUCHPAD=yes
+
+    export GAMES=
 
 export USERSHELL=/bin/zsh
 

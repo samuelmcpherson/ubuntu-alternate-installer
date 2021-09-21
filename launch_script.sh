@@ -987,5 +987,22 @@ then
 
 fi
 
+if [ -n "$MAC" ]
+then
+
+    export CURRENTFUNC="extraConfiguration/systemConfigMac.sh"
+    export CURRENTARGS=
+
+    if [ -n "$ZFS" ]
+    then
+        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    fi
+
+    menuFull
+
+    export LASTFUNC=$CURRENTFUNC
+    export LASTARGS=$CURRENTARGS
+
+fi
 
 exit 0
