@@ -58,18 +58,16 @@ then
 
 fi
 
+
+cp $CONFIGDIR/home/.vimrc $TEMPMOUNT/home/$USER/.vimrc
+
 chroot $TEMPMOUNT /bin/bash -c "usermod -s $ROOTSHELL root"
 
 if [[ "$ROOTSHELL" = "/bin/zsh" || "$ROOTSHELL" = "/usr/bin/zsh" ]]
 then
-    cp $CONFIGDIR/home/.zshrc $TEMPMOUNT/root
 
-    cp $CONFIGDIR/home/.zshrc.local $TEMPMOUNT/root
-
-    cp $CONFIGDIR/home/grml-zsh-refcard.pdf $TEMPMOUNT/root
-
-    cp $CONFIGDIR/home/grml-zsh-refcard.pdf $TEMPMOUNT/root
-
+    cp $CONFIGDIR/home/.zshrc $TEMPMOUNT/root/.zshrc
+    
     chroot $TEMPMOUNT /bin/bash -c "chown -R root:root /root"
 fi
 
@@ -77,11 +75,8 @@ chroot $TEMPMOUNT /bin/bash -c "usermod -s $USERSHELL $USER"
 
 if [[ "$USERSHELL" = "/bin/zsh" || "$USERSHELL" = "/usr/bin/zsh" ]]
 then
-    cp $CONFIGDIR/home/.zshrc $TEMPMOUNT/home/$USER/
-
-    cp $CONFIGDIR/home/.zshrc.local $TEMPMOUNT/home/$USER/
-
-    cp $CONFIGDIR/home/grml-zsh-refcard.pdf $TEMPMOUNT/home/$USER/
+ 
+    cp $CONFIGDIR/home/.zshrc $TEMPMOUNT/home/$USER/.zshrc
 
     chroot $TEMPMOUNT /bin/bash -c "chown -R $USER:users /home/$USER"
 fi
