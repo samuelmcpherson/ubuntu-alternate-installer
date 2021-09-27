@@ -19,8 +19,7 @@ cp $CONFIGDIR/home/.config/autostart/conky* $TEMPMOUNT/home/$USER/.config/autost
 
 chroot $TEMPMOUNT su - $USER -c "systemctl --user enable psd.service"
 
-chroot $TEMPMOUNT /bin/bash -c "cp $CONFIGDIR/etc/X11/xorg.conf.d/30-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf"
-
+cp $CONFIGDIR/etc/X11/xorg.conf.d/30-touchpad.conf $TEMPMOUNT/etc/X11/xorg.conf.d/30-touchpad.conf"
 
 if [[ -n "$GESTURES" ]]
 then

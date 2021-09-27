@@ -12,6 +12,8 @@ chroot $TEMPMOUNT /bin/bash -c "cp $CONFIGDIR/etc/udev/rules.d/90-xhc_sleep.rule
 
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/modprobe.d/hid_apple.conf"
 
+cp $CONFIGDIR/etc/udev/rules.d/90-xhc_sleep.rules $TEMPMOUNT/etc/udev/rules.d/90-xhc_sleep.rules"
+
 if [[ -n "$FNKEYMODESWAP" ]]
 then
     chroot $TEMPMOUNT /bin/bash -c "echo options hid_apple fnmode=2 >> /etc/modprobe.d/hid_apple.conf"
