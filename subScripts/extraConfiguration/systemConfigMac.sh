@@ -8,11 +8,9 @@ chroot $TEMPMOUNT /bin/bash -c "echo coretemp >> /etc/modules"
 
 chroot $TEMPMOUNT /bin/bash -c "echo applesmc >> /etc/modules"
 
-chroot $TEMPMOUNT /bin/bash -c "cp $CONFIGDIR/etc/udev/rules.d/90-xhc_sleep.rules /etc/udev/rules.d/90-xhc_sleep.rules"
-
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/modprobe.d/hid_apple.conf"
 
-cp $CONFIGDIR/etc/udev/rules.d/90-xhc_sleep.rules $TEMPMOUNT/etc/udev/rules.d/90-xhc_sleep.rules"
+cp $CONFIGDIR/etc/udev/rules.d/90-xhc_sleep.rules $TEMPMOUNT/etc/udev/rules.d/90-xhc_sleep.rules
 
 if [[ -n "$FNKEYMODESWAP" ]]
 then

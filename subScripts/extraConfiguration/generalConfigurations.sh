@@ -26,38 +26,12 @@ fi
 
 if [ -n "$HIDPI" ]
 then
-    echo '# CONFIGURATION FILE FOR SETUPCON' > $TEMPMOUNT/etc/default/console-setup 
 
-    echo '# Consult the console-setup(5) manual page.' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo '' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo 'ACTIVE_CONSOLES="/dev/tty[1-6]"' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo '' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo 'CHARMAP="UTF-8"' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo '' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo 'CODESET="guess"' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo 'FONTFACE="Fixed"' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo 'FONTSIZE="16x32"' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo '' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo 'VIDEOMODE=' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo '' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo '# The following is an example how to use a braille font' >> $TEMPMOUNT/etc/default/console-setup
-
-    echo '# FONT="lat9w-08.psf.gz brl-8x8.psf"' >> $TEMPMOUNT/etc/default/console-setup
+cp $CONFIGDIR/etc/default/console-setup $TEMPMOUNT/etc/default/console-setup
 
 fi
 
+cp $CONFIGDIR/home/.gitconfig $TEMPMOUNT/home/$USER/.gitconfig
 
 cp $CONFIGDIR/home/.vimrc $TEMPMOUNT/home/$USER/.vimrc
 
@@ -65,6 +39,8 @@ chroot $TEMPMOUNT /bin/bash -c "usermod -s $ROOTSHELL root"
 
 if [[ "$ROOTSHELL" = "/bin/zsh" || "$ROOTSHELL" = "/usr/bin/zsh" ]]
 then
+
+    cp $TEMPMOUNT/usr/share/zsh-antigen/antigen.zsh $TEMPMOUNT/root/antigen.zsh
 
     cp $CONFIGDIR/home/.zshrc $TEMPMOUNT/root/.zshrc
     
@@ -76,6 +52,8 @@ chroot $TEMPMOUNT /bin/bash -c "usermod -s $USERSHELL $USER"
 if [[ "$USERSHELL" = "/bin/zsh" || "$USERSHELL" = "/usr/bin/zsh" ]]
 then
  
+    cp $TEMPMOUNT/usr/share/zsh-antigen/antigen.zsh $TEMPMOUNT/home/$USER/antigen.zsh
+
     cp $CONFIGDIR/home/.zshrc $TEMPMOUNT/home/$USER/.zshrc
 
     chroot $TEMPMOUNT /bin/bash -c "chown -R $USER:users /home/$USER"

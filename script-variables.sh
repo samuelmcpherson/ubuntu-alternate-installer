@@ -21,9 +21,9 @@ export HOSTNAME=IT-laptop-MBP12
 
 export TIMEOUT=20 # number of seconds before selecting the default menu option
 
-export DOMAIN=housenet.lan
+export DOMAIN=
 
-export NETDEVICE=enp0s25
+export NETDEVICE=ens9
 
 export STATIC=
 
@@ -43,19 +43,19 @@ export ZFS=yes
 
 # existing partitions
 
-    export EFIPART= #/dev/disk/by-id/
+    export EFIPART=/dev/disk/by-id/ata-APPLE_SSD_SD512E_130916409931-part1
 
-    export BPART= #/dev/disk/by-id/
+    export BPART=/dev/disk/by-id/ata-APPLE_SSD_SD512E_130916409931-part4
 
-    export RPART= #/dev/disk/by-id/
+    export RPART=/dev/disk/by-id/ata-APPLE_SSD_SD512E_130916409931-part5
 
 # Format and partition whole disk(s)
 
-    export MIRROR=yes
+    export MIRROR=
 
-    export DISK1=/dev/disk/by-id/
+    export DISK1=
 
-    export DISK2=/dev/disk/by-id/
+    export DISK2=
 
 export RELEASE=hirsute # groovy, focal or hirsute
 
