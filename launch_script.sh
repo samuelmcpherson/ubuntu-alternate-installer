@@ -833,6 +833,20 @@ then
 fi
 
 
+export CURRENTFUNC="extraConfiguration/packageInstallBase.sh"
+export CURRENTARGS=
+
+if [ -n "$ZFS" ]
+then
+    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+fi
+
+menuFull
+
+export LASTFUNC=$CURRENTFUNC
+export LASTARGS=$CURRENTARGS
+
+
 export CURRENTFUNC="extraConfiguration/generalConfigurations.sh"
 export CURRENTARGS=
 
@@ -846,19 +860,6 @@ menuFull
 export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
-
-export CURRENTFUNC="extraConfiguration/packageInstallBase.sh"
-export CURRENTARGS=
-
-if [ -n "$ZFS" ]
-then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
-fi
-
-menuFull
-
-export LASTFUNC=$CURRENTFUNC
-export LASTARGS=$CURRENTARGS
 
 if [ -n "$ANSIBLE" ]
 then
