@@ -11,4 +11,3 @@ chroot $TEMPMOUNT /bin/bash -c "echo $HOSTNAME > /etc/hostname"
 #chroot $TEMPMOUNT /bin/bash -c "echo 127.0.0.1 localhost.localdomain localhost >> /etc/hosts"
 #chroot $TEMPMOUNT /bin/bash -c "echo ::1 localhost.localdomain localhost >> /etc/hosts"
 chroot $TEMPMOUNT /bin/bash -c "echo 127.0.1.1 $HOSTNAME.$DOMAIN $HOSTNAME >> /etc/hosts"
-

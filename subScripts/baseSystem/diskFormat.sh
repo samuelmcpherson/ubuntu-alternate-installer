@@ -13,9 +13,7 @@ then
 
     sgdisk     -n1:1M:+512M   -t1:EF00 $1 && echo "---> created EFI partition at $1-part1  <--------------------------------------------------------------" || { echo "failed to create EFI partition at $1-part1"; exit 1; }
 
-    sgdisk     -n2:0:+4G      -t2:BF00 $1 && echo "---> created bpool partition at $1-part2  <--------------------------------------------------------------" || { echo "failed to create bpool partition at $1-part2"; exit 1; }
-
-    sgdisk     -n3:0:0        -t3:BE00 $1 && echo "---> created rpool partition at $1-part3  <--------------------------------------------------------------" || { echo "failed to create rpool partition at $1-part3"; exit 1; }
+    sgdisk     -n2:0:0        -t2:BE00 $1 && echo "---> created rpool partition at $1-part2  <--------------------------------------------------------------" || { echo "failed to create rpool partition at $1-part2"; exit 1; }
 
     sleep 3
 
@@ -35,9 +33,7 @@ then
 elif [ -n "$ZFS" ] && [ -z "$EFI" ] && [ -n "$BIOS" ] 
 then
 
-    sgdisk     -n1:0:+4G      -t1:BF00 $1 && echo "---> created bpool partition at $1-part1  <--------------------------------------------------------------" || { echo "failed to create bpool partition at $1-part2"; exit 1; }
-
-    sgdisk     -n2:0:0        -t2:BE00 $1 && echo "---> created rpool partition at $1-part2  <--------------------------------------------------------------" || { echo "failed to create rpool partition at $1-part3"; exit 1; }
+    sgdisk     -n1:0:0        -t1:BE00 $1 && echo "---> created rpool partition at $1-part1  <--------------------------------------------------------------" || { echo "failed to create rpool partition at $1-part1"; exit 1; }
 
 
 elif [ -z "$ZFS" ] && [ -n "$EFI" ] && [ -z "$BIOS" ]

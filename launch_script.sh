@@ -236,7 +236,7 @@ fi
 case $n in
   1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/zfs-recursive-restore.sh bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) break ;;
   6) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuPreSystemPostZfsPrev ;;
@@ -303,7 +303,7 @@ fi
 case $n in
   1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/zfs-recursive-restore.sh bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
   6) exit 1 ;;
@@ -371,7 +371,7 @@ fi
 case $n in
   1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/zfs-recursive-restore.sh bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) chroot $TEMPMOUNT /bin/bash ;;
   6) break ;;
@@ -438,7 +438,7 @@ fi
 case $n in
   1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/zfs-recursive-restore.sh bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; $SCRIPTDIR/subScripts/systemMounts.sh; else echo "NOT A ZFS INSTALL"; fi ;;
+  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
   4) /bin/bash ;;
   5) chroot $TEMPMOUNT /bin/bash ;;
   6) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
@@ -478,7 +478,7 @@ source ./script-variables.sh
 
 echo "Start $(date +%Y-%m-%d_%H:%M)"
 
-if [ -n "$ZFS" ] && [ -z "$RPART" ] && [ -z "$BPART" ] && [ -n "$DISK1" ] && [ -n "$DISK2" ]
+if [ -n "$ZFS" ] && [ -z "$RPART" ] && [ -n "$DISK1" ] && [ -n "$DISK2" ]
 then
 
     export CURRENTFUNC="baseSystem/diskFormat.sh"
@@ -495,11 +495,11 @@ then
 	menuPreSystem
     
     export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS
+    export LASTARGS=$CURRENTARGS  
 
 
-    export CURRENTFUNC="baseSystem/bpoolSetup.sh"
-    
+    export CURRENTFUNC="baseSystem/zpoolSetup.sh"
+
     if [ -n "$EFI" ] && [ -z "$BIOS" ]
     then
 
@@ -509,30 +509,6 @@ then
     then
 
         export CURRENTARGS="$DISK1-part1 $DISK2-part1"
-
-    else
-
-        echo "Variables for EFI or BIOS install are both unset, aborting..."
-        exit 1
-
-    fi
-
-    menuPreSystem
-    export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS    
-
-
-    export CURRENTFUNC="baseSystem/rpoolSetup.sh"
-
-    if [ -n "$EFI" ] && [ -z "$BIOS" ]
-    then
-
-        export CURRENTARGS="$DISK1-part3 $DISK2-part3"
-    
-    elif [ -z "$EFI" ] && [ -n "$BIOS" ]
-    then
-
-        export CURRENTARGS="$DISK1-part2 $DISK2-part2"
 
     else
     
@@ -553,7 +529,7 @@ then
 
     fi
 
-elif [ -n "$ZFS" ] && [ -z "$RPART" ] && [ -z "$BPART" ] && [ -n "$DISK1" ] && [ -z "$DISK2" ]
+elif [ -n "$ZFS" ] && [ -z "$RPART" ] && [ -n "$DISK1" ] && [ -z "$DISK2" ]
 then
 
     export CURRENTFUNC="baseSystem/diskFormat.sh"
@@ -565,7 +541,7 @@ then
     export LASTARGS=$CURRENTARGS
 
 
-    export CURRENTFUNC="baseSystem/bpoolSetup.sh"
+    export CURRENTFUNC="baseSystem/zpoolSetup.sh"
 
     if [ -n "$EFI" ] && [ -z "$BIOS" ]
     then
@@ -587,31 +563,6 @@ then
     menuPreSystem
     
     export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS 
-
-
-    export CURRENTFUNC="baseSystem/rpoolSetup.sh"
-
-    if [ -n "$EFI" ] && [ -z "$BIOS" ]
-    then
-
-        export CURRENTARGS="$DISK1-part3"
-    
-    elif [ -z "$EFI" ] && [ -n "$BIOS" ]
-    then
-
-        export CURRENTARGS="$DISK1-part2"
-
-    else
-    
-        echo "Variables for EFI or BIOS install are both unset, aborting..."
-        exit 1
-
-    fi
-
-    menuPreSystem
-    
-    export LASTFUNC=$CURRENTFUNC
     export LASTARGS=$CURRENTARGS
 
     if [ -n "$EFI" ] && [ -z "$BIOS" ] 
@@ -619,19 +570,10 @@ then
         export EFIPART="$DISK1-part1"
     fi
 
-elif [ -n "$ZFS" ] && [ -n "$RPART" ] && [ -n "$BPART" ] && [ -z "$DISK1" ] && [ -z "$DISK2" ] 
+elif [ -n "$ZFS" ] && [ -n "$RPART" ] && [ -z "$DISK1" ] && [ -z "$DISK2" ] 
 then
-    
-    export CURRENTFUNC="baseSystem/bpoolSetup.sh"
-    export CURRENTARGS=$BPART
-    echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
-    menuStart
-    
-    export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS
-    
 
-    export CURRENTFUNC="baseSystem/rpoolSetup.sh"
+    export CURRENTFUNC="baseSystem/zpoolSetup.sh"
     export CURRENTARGS=$RPART
     menuPreSystem
     
@@ -688,7 +630,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuPreSystemPostZfs
@@ -704,7 +646,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuPreSystemPostZfs
@@ -719,7 +661,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -733,7 +675,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -747,7 +689,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -761,7 +703,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -775,7 +717,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -792,7 +734,7 @@ then
     
     if [ -n "$ZFS" ]
     then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
     
     menuFull
@@ -804,7 +746,7 @@ fi
 
 if [ -n "$ZFS" ]
     then
-    zfs snapshot -r rpool@base-install; zfs snapshot -r bpool@base-install
+    zfs snapshot -r zroot@base-install
 fi
 
 echo '#########################################################################################'
@@ -813,24 +755,24 @@ echo 'Minimal base system has been successfully installed, now performing extra 
 echo '#########################################################################################'
 echo '#########################################################################################'
 
-if [ -n "$ZFS" ]
-then
+#if [ -n "$ZFS" ]
+#then
 
-    export CURRENTFUNC="extraConfiguration/createExtraZfsDatasets.sh"
-    export CURRENTARGS=
+#   export CURRENTFUNC="extraConfiguration/createExtraZfsDatasets.sh"
+#   export CURRENTARGS=
 
 
-    if [ -n "$ZFS" ]
-    then
-        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
-    fi
+#    if [ -n "$ZFS" ]
+#    then
+#        zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+#    fi
 
-    menuFull
+#    menuFull
 
-    export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS
+#    export LASTFUNC=$CURRENTFUNC
+#    export LASTARGS=$CURRENTARGS
 
-fi
+#fi
 
 
 export CURRENTFUNC="extraConfiguration/packageInstallBase.sh"
@@ -838,7 +780,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -852,7 +794,7 @@ export CURRENTARGS=
 
 if [ -n "$ZFS" ]
 then
-    zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+    zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
 fi
 
 menuFull
@@ -869,7 +811,7 @@ then
 
     if [ -n "$ZFS" ]
     then
-        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+        zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
 
     menuFull
@@ -887,7 +829,7 @@ then
 
     if [ -n "$ZFS" ]
     then
-        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+        zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
 
     menuFull
@@ -905,7 +847,7 @@ then
 
     if [ -n "$ZFS" ]
     then
-        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+        zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
 
     menuFull
@@ -923,7 +865,7 @@ then
 
     if [ -n "$ZFS" ]
     then
-        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+        zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
 
     menuFull
@@ -941,7 +883,7 @@ then
 
     if [ -n "$ZFS" ]
     then
-        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+        zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
 
     menuFull
@@ -959,7 +901,7 @@ then
 
     if [ -n "$ZFS" ]
     then
-        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+        zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
 
     menuFull
@@ -978,7 +920,7 @@ then
 
     if [ -n "$ZFS" ]
     then
-        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+        zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
 
     menuFull
@@ -996,7 +938,7 @@ then
 
     if [ -n "$ZFS" ]
     then
-        zfs snapshot -r rpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; zfs snapshot -r bpool@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
+        zfs snapshot -r zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"
     fi
 
     menuFull

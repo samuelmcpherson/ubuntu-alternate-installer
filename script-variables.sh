@@ -17,7 +17,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 ### Required vars:
 
-export HOSTNAME=IT-laptop-MBP12
+export HOSTNAME=IT-laptop-MBP11
 
 export TIMEOUT=20 # number of seconds before selecting the default menu option
 
@@ -43,19 +43,17 @@ export ZFS=yes
 
 # existing partitions
 
-    export EFIPART=/dev/disk/by-id/ata-APPLE_SSD_SD512E_130916409931-part1
+    export EFIPART=
 
-    export BPART=/dev/disk/by-id/ata-APPLE_SSD_SD512E_130916409931-part4
-
-    export RPART=/dev/disk/by-id/ata-APPLE_SSD_SD512E_130916409931-part5
+    export RPART=
 
 # Format and partition whole disk(s)
 
-    export MIRROR=
+    export MIRROR=yes
 
-    export DISK1=
+    export DISK1=/dev/disk/by-id/
 
-    export DISK2=
+    export DISK2=/dev/disk/by-id/
 
 export RELEASE=hirsute # groovy, focal or hirsute
 

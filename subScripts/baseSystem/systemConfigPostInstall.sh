@@ -15,5 +15,22 @@ then
             sed -i -r "s/(^|[^#y])(compress)/\1#\2/" "$file"
         fi
     done
+
+    chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/dkms"
+
+    chroot $TEMPMOUNT /bin/bash -c "echo REMAKE_INITRD=yes > /etc/dkms/zfs.conf"
+
+    cp /etc/hostid $TEMPMOUNT/etc/hostid
+
+    chroot $TEMPMOUNT /bin/bash -c "zpool set cachefile=/etc/zfs/zpool.cache zroot"
+
+    chroot $TEMPMOUNT /bin/bash -c "systemctl enable zfs.target"
+    chroot $TEMPMOUNT /bin/bash -c "systemctl enable zfs-import-cache"
+    chroot $TEMPMOUNT /bin/bash -c "systemctl enable zfs-mount"
+    chroot $TEMPMOUNT /bin/bash -c "systemctl enable zfs-import.target"
+
+    chroot $TEMPMOUNT /bin/bash -c "cp /usr/share/systemd/tmp.mount /etc/systemd/system/"
+    chroot $TEMPMOUNT /bin/bash -c "systemctl enable tmp.mount"
+
 fi
 
