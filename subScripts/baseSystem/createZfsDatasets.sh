@@ -22,9 +22,9 @@ zfs create -o canmount=off -o mountpoint=none zroot/DATA
 
 zfs create -o canmount=off -o mountpoint=none zroot/DATA/ubuntu
 
-zfs create -o canmount=off -o zroot/DATA/ubuntu/var
+zfs create -o canmount=off -o mountpoint=none zroot/DATA/ubuntu/var
 
-zfs create -o canmount=off -o zroot/DATA/ubuntu/var/lib
+zfs create -o canmount=off -o mountpoint=none zroot/DATA/ubuntu/var/lib
 
 zfs create -o canmount=on -o mountpoint=/var/log zroot/DATA/ubuntu/var/log
 
