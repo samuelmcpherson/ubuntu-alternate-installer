@@ -21,9 +21,9 @@ export HOSTNAME=IT-laptop-MBP11
 
 export TIMEOUT=20 # number of seconds before selecting the default menu option
 
-export DOMAIN=
+export DOMAIN=housenet.lan
 
-export NETDEVICE=ens9
+export NETDEVICE=enp0s25
 
 export STATIC=
 
@@ -51,9 +51,9 @@ export ZFS=yes
 
     export MIRROR=yes
 
-    export DISK1=/dev/disk/by-id/
+    export DISK1=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S2RANB0HA26883V
 
-    export DISK2=/dev/disk/by-id/
+    export DISK2=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAGB51863E
 
 export RELEASE=hirsute # groovy, focal or hirsute
 
@@ -70,7 +70,7 @@ export CONFIGREPO="https://github.com/samuelmcpherson/config-files.git"
 
 export CONFIGDIR="$TEMPMOUNT/home/$USER/$(echo $CONFIGREPO | cut -d '/' -f5 | sed -r 's/.{4}$//')"
 
-export ANSIBLE=
+export ANSIBLE=yes
 
 export DOCKER=
 
@@ -86,7 +86,7 @@ export DESKTOP=yes
 
     export TOUCH=
 
-    export HIDPI=yes
+    export HIDPI=
 
     export THINKPAD=
 
@@ -96,11 +96,11 @@ export DESKTOP=yes
 
     export MAC=yes
 
-        export FNKEYMODESWAP=yes
+        export FNKEYMODESWAP=
 
-        export ALTCMDKEYSWAP=yes
+        export ALTCMDKEYSWAP=
 
-    export GAMES=
+    export GAMES=yes
 
 export USERSHELL=/bin/zsh
 
