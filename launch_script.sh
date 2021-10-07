@@ -790,7 +790,7 @@ echo '##########################################################################
 #fi
 
 
-export CURRENTFUNC="extraConfiguration/packageInstallBase.sh"
+export CURRENTFUNC="extraConfiguration/packageInstallUtilities.sh"
 export CURRENTARGS=
 
 if [ -n "$ZFS" ]

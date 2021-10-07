@@ -5,7 +5,7 @@ chroot $TEMPMOUNT /bin/bash -c "zfs set org.zfsbootmenu:commandline=\"spl_hostid
 chroot $TEMPMOUNT /bin/bash -c "cd /root && git clone 'https://github.com/zbm-dev/zfsbootmenu.git'"
 chroot $TEMPMOUNT /bin/bash -c "cd /root/zfsbootmenu && make install"
 
-chroot $TEMPMOUNT /bin/bash -c "cpan 'YAML::PP'"
+chroot $TEMPMOUNT /bin/bash -c "echo yes | cpan 'YAML::PP'"
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/dracut.conf.d"
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/dracut.conf.d/100-zol.conf"
@@ -43,9 +43,9 @@ chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/zfsbootmenu/dracut.conf.d"
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf"
 echo 'omit_dracutmodules+=" systemd systemd-initrd dracut-systemd "' > $TEMPMOUNT/etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf
 
-dracut --force
+chroot $TEMPMOUNT /bin/bash -c "dracut --force"
 
-generate-zbm
+chroot $TEMPMOUNT /bin/bash -c "generate-zbm"
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /boot/efi/EFI/debian"
 chroot $TEMPMOUNT /bin/bash -c "touch /boot/efi/EFI/debian/refind_linux.conf"
