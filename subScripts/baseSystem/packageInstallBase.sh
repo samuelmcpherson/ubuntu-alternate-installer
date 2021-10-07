@@ -20,7 +20,7 @@ then
     chroot $TEMPMOUNT /bin/bash -c "apt -y install refind efibootmgr && echo '---> apt install refind efibootmgr succeeded <--------------------------------------------------------------' || { echo 'apt install refind efibootmgr failed'; exit 1; }" || exit 1
 fi
 
-chroot $TEMPMOUNT /bin/bash -c "apt -y install locales git rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https && echo '---> apt install locales git rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https succeeded <--------------------------------------------------------------' || { echo 'apt install locales git rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https failed'; exit 1; }" || exit 1
+chroot $TEMPMOUNT /bin/bash -c "apt -y install locales vim git rsync dosfstools openssh-server curl patch apt-file software-properties-common apt-transport-https && echo '---> apt install locales vim git rsync dosfstools openssh-server curl patch apt-file software-properties-common apt-transport-https succeeded <--------------------------------------------------------------' || { echo 'apt install locales vim git rsync dosfstools openssh-server curl patch apt-file software-properties-common apt-transport-https failed'; exit 1; }" || exit 1
 
 if [ -n "$SECUREBOOT" ]
 then
