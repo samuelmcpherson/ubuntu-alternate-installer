@@ -2,27 +2,25 @@
 
 chroot $TEMPMOUNT /bin/bash -c "apt -y update"
 
-chroot $TEMPMOUNT /bin/bash -c "apt dist-upgrade --yes && echo '---> apt dist-upgrade succeeded <--------------------------------------------------------------' || { echo 'apt dist-upgrade failed'; exit 1; }" || exit 1
+chroot $TEMPMOUNT /bin/bash -c "apt dist-upgrade -y && echo '---> apt dist-upgrade succeeded <--------------------------------------------------------------' || { echo 'apt dist-upgrade failed'; exit 1; }" || exit 1
 
-chroot $TEMPMOUNT /bin/bash -c "apt install -y ubuntu-standard && echo '---> apt install ubuntu-standard succeeded <--------------------------------------------------------------' || { echo 'apt install ubuntu-standard failed'; exit 1; }" || exit 1
-
-chroot $TEMPMOUNT /bin/bash -c "apt install -y linux-image-generic linux-headers-generic linux-firmware && echo '---> apt install linux-image-generic linux-headers-generic linux-firmware succeeded <--------------------------------------------------------------' || { echo 'apt install linux-image-generic linux-headers-generic linux-firmware failed'; exit 1; }" || exit 1
+chroot $TEMPMOUNT /bin/bash -c "apt install -y dpkg-dev linux-headers-amd64 linux-image-amd64 systemd-sysv firmware-linux && echo '---> apt install dpkg-dev linux-headers-amd64 linux-image-amd64 systemd-sysv firmware-linux succeeded <--------------------------------------------------------------' || { echo 'apt install dpkg-dev linux-headers-amd64 linux-image-amd64 systemd-sysv firmware-linux failed'; exit 1; }" || exit 1
 
 if [ -n "$ZFS" ]
 then
-    chroot $TEMPMOUNT /bin/bash -c "apt install -y zfs-dracut zfs-dkms zfs-zed zfsutils-linux && echo '---> apt install zfs-dracut zfs-dkms zfs-zed zfsutils-linux succeeded <--------------------------------------------------------------' || { echo 'apt install zfs-initramfs zfs-doc zfs-dracut zsys failed'; exit 1; }" || exit 1
+    chroot $TEMPMOUNT /bin/bash -c "apt install -y zfs-dracut kexec-tools libconfig-inifiles-perl libsort-versions-perl libboolean-perl fzf mbuffer && echo '---> apt install zfs-dracut kexec-tools kexec-tools libconfig-inifiles-perl libsort-versions-perl libboolean-perl fzf mbuffer succeeded <--------------------------------------------------------------' || { echo 'apt install zfs-dracut kexec-tools kexec-tools kexec-tools libconfig-inifiles-perl libsort-versions-perl libboolean-perl fzf mbuffer failed'; exit 1; }" || exit 1
 fi
 
 
 if [ -n "$BIOS" ] 
 then
-    chroot $TEMPMOUNT /bin/bash -c "apt -y install git refind kexec-tools dpkg-dev libconfig-inifiles-perl libsort-versions-perl libboolean-perl fzf mbuffer && echo '---> apt install refind kexec-tools dpkg-dev libconfig-inifiles-perl libsort-versions-perl libboolean-perl fzf mbuffer succeeded <--------------------------------------------------------------' || apt -y install refind kexec-tools dpkg-dev libconfig-inifiles-perl libsort-versions-perl libboolean-perl fzf mbuffer failed'; exit 1; }" || exit 1
+    chroot $TEMPMOUNT /bin/bash -c "apt -y install refind && echo '---> apt install refind succeeded <--------------------------------------------------------------' || apt -y install refind  failed'; exit 1; }" || exit 1
 elif [ -n "$EFI" ]
 then
-    chroot $TEMPMOUNT /bin/bash -c "apt -y install git refind kexec-tools dpkg-dev libconfig-inifiles-perl libsort-versions-perl libboolean-perl fzf mbuffer efibootmgr && echo '---> apt install refind kexec-tools dpkg-dev libconfig-inifiles-perl libsort-versions-perl libboolean-perl fzf mbuffer efibootmgr succeeded <--------------------------------------------------------------' || { echo 'apt install refind kexec-tools dpkg-dev libconfig-inifiles-perl libsort-versions-perl libboolean-perl fzf mbuffer efibootmgr failed'; exit 1; }" || exit 1
+    chroot $TEMPMOUNT /bin/bash -c "apt -y install refind efibootmgr && echo '---> apt install refind efibootmgr succeeded <--------------------------------------------------------------' || { echo 'apt install refind efibootmgr failed'; exit 1; }" || exit 1
 fi
 
-chroot $TEMPMOUNT /bin/bash -c "apt -y install rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https && echo '---> apt install rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https succeeded <--------------------------------------------------------------' || { echo 'apt install rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https failed'; exit 1; }" || exit 1
+chroot $TEMPMOUNT /bin/bash -c "apt -y install locales git rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https && echo '---> apt install locales git rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https succeeded <--------------------------------------------------------------' || { echo 'apt install locales git rsync dosfstools openssh-server curl patch apt-file update-manager-core software-properties-common apt-transport-https failed'; exit 1; }" || exit 1
 
 if [ -n "$SECUREBOOT" ]
 then

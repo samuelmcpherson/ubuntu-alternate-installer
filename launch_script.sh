@@ -470,9 +470,22 @@ done
 
 # environment prep
 
-apt install -y debootstrap gdisk zfs-initramfs vim
+source ./script-variables.sh
 
-systemctl stop zed
+{
+echo "deb http://deb.debian.org/debian $RELEASE main contrib non-free"
+echo "deb http://deb.debian.org/debian $RELEASE-backports main contrib non-free"
+} >> /etc/apt/sources.list
+
+apt update
+
+apt install -y debootstrap gdisk dkms dpkg-dev linux-headers-$(uname -r)
+
+apt install -y -t $RELEASE-backports --no-install-recommends zfs-dkms
+
+modprobe zfs
+
+apt install -y -t $RELEASE-backports zfsutils-linux
 
 source ./script-variables.sh
 
@@ -656,7 +669,7 @@ export LASTARGS=$CURRENTARGS
 
 # ----------------------------- chrootable from this point
 
-export CURRENTFUNC="baseSystem/baseChrootConfig.sh"
+export CURRENTFUNC="baseSystem/packageInstallBase.sh"
 export CURRENTARGS=
 
 if [ -n "$ZFS" ]
@@ -670,7 +683,7 @@ export LASTFUNC=$CURRENTFUNC
 export LASTARGS=$CURRENTARGS
 
 
-export CURRENTFUNC="baseSystem/packageInstallBase.sh"
+export CURRENTFUNC="baseSystem/baseChrootConfig.sh"
 export CURRENTARGS=
 
 if [ -n "$ZFS" ]

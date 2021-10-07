@@ -29,14 +29,14 @@ chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/config.yaml"
   echo "  BootMountPoint: /boot/efi"
   echo "  DracutConfDir: /etc/zfsbootmenu/dracut.conf.d"
   echo "Components:"
-  echo "  ImageDir: /boot/efi/EFI/ubuntu"
+  echo "  ImageDir: /boot/efi/EFI/debian"
   echo "  Versions: 3"
   echo "  Enabled: true"
   echo "  syslinux:"
   echo "    Config: /boot/syslinux/syslinux.cfg"
   echo "    Enabled: false"
   echo "EFI:"
-  echo "  ImageDir: /boot/efi/EFI/ubuntu"
+  echo "  ImageDir: /boot/efi/EFI/debian"
   echo "  Versions: 2"
   echo "  Enabled: false"
   echo "Kernel:"
@@ -51,10 +51,10 @@ dracut --force
 
 generate-zbm
 
-chroot $TEMPMOUNT /bin/bash -c "mkdir -p /boot/efi/EFI/ubuntu"
-chroot $TEMPMOUNT /bin/bash -c "touch /boot/efi/EFI/ubuntu/refind_linux.conf"
-echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=0 ro quiet loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/ubuntu/refind_linux.conf
-echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=-1 ro quiet loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/ubuntu/refind_linux.conf
+chroot $TEMPMOUNT /bin/bash -c "mkdir -p /boot/efi/EFI/debian"
+chroot $TEMPMOUNT /bin/bash -c "touch /boot/efi/EFI/debian/refind_linux.conf"
+echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=0 ro quiet loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
+echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=-1 ro quiet loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
 
 
 #echo ''

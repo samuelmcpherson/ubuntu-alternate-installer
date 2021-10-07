@@ -11,13 +11,11 @@ export CONFIGREPO="https://github.com/samuelmcpherson/config-files.git"
 
 export CONFIGDIR="$TEMPMOUNT/home/$USER/$(echo $CONFIGREPO | cut -d '/' -f5 | sed -r 's/.{4}$//')"
 
-export UUID=$(dd if=/dev/urandom bs=1 count=100 2>/dev/null | tr -dc 'a-z0-9' | cut -c-6)
-
 export DEBIAN_FRONTEND=noninteractive
 
 ### Required vars:
 
-export HOSTNAME=IT-laptop-MBP11
+export HOSTNAME=thinkpad-t430-debian
 
 export TIMEOUT=20 # number of seconds before selecting the default menu option
 
@@ -49,13 +47,13 @@ export ZFS=yes
 
 # Format and partition whole disk(s)
 
-    export MIRROR=yes
+    export MIRROR=mirror
 
     export DISK1=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S2RANB0HA26883V
 
     export DISK2=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAGB51863E
 
-export RELEASE=hirsute # groovy, focal or hirsute
+export RELEASE=bullseye # groovy, focal or hirsute
 
 export LANG=en_US.UTF-8
 
@@ -70,19 +68,19 @@ export CONFIGREPO="https://github.com/samuelmcpherson/config-files.git"
 
 export CONFIGDIR="$TEMPMOUNT/home/$USER/$(echo $CONFIGREPO | cut -d '/' -f5 | sed -r 's/.{4}$//')"
 
-export ANSIBLE=yes
+export ANSIBLE=
 
 export DOCKER=
 
-export DESKTOP=yes
+export DESKTOP=
 
-    export KDE=yes
+    export KDE=
         
-        export PARACHUTE=yes
+        export PARACHUTE=
 
-        export KROHNKITE=yes
+        export KROHNKITE=
     
-    export GESTURES=yes
+    export GESTURES=
 
     export TOUCH=
 
@@ -94,13 +92,13 @@ export DESKTOP=yes
 
     export SURFACE=
 
-    export MAC=yes
+    export MAC=
 
         export FNKEYMODESWAP=
 
         export ALTCMDKEYSWAP=
 
-    export GAMES=yes
+    export GAMES=
 
 export USERSHELL=/bin/zsh
 

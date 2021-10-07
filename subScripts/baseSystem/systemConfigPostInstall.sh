@@ -22,6 +22,8 @@ then
 
     cp /etc/hostid $TEMPMOUNT/etc/hostid
 
+    cp /etc/resolv.conf $TEMPMOUNT/etc/resolv.conf
+
     chroot $TEMPMOUNT /bin/bash -c "zpool set cachefile=/etc/zfs/zpool.cache zroot"
 
     chroot $TEMPMOUNT /bin/bash -c "systemctl enable zfs.target"
