@@ -26,6 +26,10 @@ cp $CONFIGDIR/home/.gitconfig $TEMPMOUNT/home/$USER/.gitconfig
 
 cp $CONFIGDIR/home/.vimrc $TEMPMOUNT/home/$USER/.vimrc
 
+mkdir -p $TEMPMOUNT/home/$USER/.ssh
+
+cp $CONFIGDIR/home/.ssh/config $TEMPMOUNT/home/$USER/.ssh/config
+
 chroot $TEMPMOUNT /bin/bash -c "usermod -s $ROOTSHELL root"
 
 if [[ "$ROOTSHELL" = "/bin/zsh" || "$ROOTSHELL" = "/usr/bin/zsh" ]]

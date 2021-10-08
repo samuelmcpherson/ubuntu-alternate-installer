@@ -475,11 +475,11 @@ source ./script-variables.sh
 {
 echo "deb http://deb.debian.org/debian $RELEASE main contrib non-free"
 echo "deb http://deb.debian.org/debian $RELEASE-backports main contrib non-free"
-} >> /etc/apt/sources.list
+} > /etc/apt/sources.list
 
 apt update
 
-apt install -y debootstrap gdisk dkms dpkg-dev linux-headers-$(uname -r)
+apt install -y efibootmgr dosfstools debootstrap gdisk dkms dpkg-dev linux-headers-$(uname -r)
 
 apt install -y -t $RELEASE-backports --no-install-recommends zfs-dkms
 

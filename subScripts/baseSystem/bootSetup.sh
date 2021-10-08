@@ -10,11 +10,11 @@ chroot $TEMPMOUNT /bin/bash -c "echo yes | cpan 'YAML::PP'"
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/dracut.conf.d"
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/dracut.conf.d/100-zol.conf"
 {    
-  echo hostonly=\"no\" 
-  echo nofsck=\"yes\" 
-  echo add_dracutmodules+=\" zfs \" 
-  echo omit_dracutmodules+=\" btrfs \" 
-  #echo install_items+=\" /etc/zfs/zroot.key \"
+  echo "hostonly=\"no\"" 
+  echo "nofsck=\"yes\"" 
+  echo "add_dracutmodules+=\" zfs \"" 
+  echo "omit_dracutmodules+=\" btrfs systemd systemd-initrd dracut-systemd \"" 
+  #echo "install_items+=\" /etc/zfs/zroot.key \""
 } > $TEMPMOUNT/etc/dracut.conf.d/100-zol.conf
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/zfsbootmenu"
@@ -34,18 +34,27 @@ chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/config.yaml"
   echo "EFI:"
   echo "  ImageDir: /boot/efi/EFI/debian"
   echo "  Versions: 2"
-  echo "  Enabled: false"
+  echo "  Enabled: true"
+  echo "  Stub: /usr/lib/systemd/boot/efi/linuxx64.efi.stub"
   echo "Kernel:"
   echo "  CommandLine: ro quiet loglevel=0"
 } > $TEMPMOUNT/etc/zfsbootmenu/config.yaml
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/zfsbootmenu/dracut.conf.d"
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf"
-echo 'omit_dracutmodules+=" systemd systemd-initrd dracut-systemd "' > $TEMPMOUNT/etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf
+{    
+  echo "hostonly=\"no\"" 
+  echo "nofsck=\"yes\"" 
+  echo "add_dracutmodules+=\" zfs \"" 
+  echo "omit_dracutmodules+=\" btrfs systemd systemd-initrd dracut-systemd \"" 
+  #echo "install_items+=\" /etc/zfs/zroot.key \"" 
+} > $TEMPMOUNT/etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf
 
 chroot $TEMPMOUNT /bin/bash -c "dracut --force"
 
 chroot $TEMPMOUNT /bin/bash -c "generate-zbm"
+
+chroot $TEMPMOUNT /bin/bash -c "refind-install"
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /boot/efi/EFI/debian"
 chroot $TEMPMOUNT /bin/bash -c "touch /boot/efi/EFI/debian/refind_linux.conf"
