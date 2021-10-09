@@ -35,7 +35,7 @@ chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/config.yaml"
   echo "  ImageDir: /boot/efi/EFI/debian"
   echo "  Versions: 2"
   echo "  Enabled: true"
-  echo "  Stub: /usr/lib/systemd/boot/efi/linuxx64.efi.stub"
+  #echo "  Stub: /usr/lib/systemd/boot/efi/linuxx64.efi.stub"
   echo "Kernel:"
   echo "  CommandLine: ro quiet loglevel=0"
 } > $TEMPMOUNT/etc/zfsbootmenu/config.yaml
@@ -58,8 +58,8 @@ chroot $TEMPMOUNT /bin/bash -c "refind-install"
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /boot/efi/EFI/debian"
 chroot $TEMPMOUNT /bin/bash -c "touch /boot/efi/EFI/debian/refind_linux.conf"
-echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=0 ro quiet loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
-echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=-1 ro quiet loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
+echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=0 ro loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
+echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=-1 ro loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
 
 
 #echo ''
