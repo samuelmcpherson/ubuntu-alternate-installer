@@ -43,9 +43,9 @@ chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/zfsbootmenu/dracut.conf.d"
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf"
 echo 'omit_dracutmodules+=" systemd systemd-initrd dracut-systemd "' > $TEMPMOUNT/etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf
 
+chroot $TEMPMOUNT /bin/bash -c "update-initramfs -k all -c"
 
-
-generate-zbm
+chroot $TEMPMOUNT /bin/bash -c "generate-zbm"
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /boot/efi/EFI/ubuntu"
 chroot $TEMPMOUNT /bin/bash -c "touch /boot/efi/EFI/ubuntu/refind_linux.conf"
