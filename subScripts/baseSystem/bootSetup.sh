@@ -1,6 +1,6 @@
 #!/bin/bash
 
-chroot $TEMPMOUNT /bin/bash -c "zfs set org.zfsbootmenu:commandline=\"spl_hostid=$( hostid ) ro quiet\" zroot/ROOT"
+chroot $TEMPMOUNT /bin/bash -c "zfs set org.zfsbootmenu:commandline=\"spl_hostid=$( hostid ) ro\" zroot/ROOT"
 
 chroot $TEMPMOUNT /bin/bash -c "cd /root && git clone 'https://github.com/zbm-dev/zfsbootmenu.git'"
 chroot $TEMPMOUNT /bin/bash -c "cd /root/zfsbootmenu && make install"
@@ -49,8 +49,8 @@ chroot $TEMPMOUNT /bin/bash -c "generate-zbm"
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /boot/efi/EFI/ubuntu"
 chroot $TEMPMOUNT /bin/bash -c "touch /boot/efi/EFI/ubuntu/refind_linux.conf"
-echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=0 ro loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/ubuntu/refind_linux.conf
-echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=-1 ro loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/ubuntu/refind_linux.conf
+echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot zbm.import_policy=hostid zbm.set_hostid zbm.timeout=0 ro loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/ubuntu/refind_linux.conf
+echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot zbm.import_policy=hostid zbm.set_hostid zbm.show ro loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/ubuntu/refind_linux.conf
 
 
 #echo ''
