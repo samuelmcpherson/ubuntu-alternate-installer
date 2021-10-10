@@ -5,7 +5,7 @@ chroot $TEMPMOUNT /bin/bash -c "zfs set org.zfsbootmenu:commandline=\"spl_hostid
 chroot $TEMPMOUNT /bin/bash -c "cd /root && git clone 'https://github.com/zbm-dev/zfsbootmenu.git'"
 chroot $TEMPMOUNT /bin/bash -c "cd /root/zfsbootmenu && make install"
 
-chroot $TEMPMOUNT /bin/bash -c "cpan 'YAML::PP'"
+chroot $TEMPMOUNT /bin/bash -c "echo yes | cpan 'YAML::PP'"
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/dracut.conf.d"
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/dracut.conf.d/100-zol.conf"
@@ -15,10 +15,6 @@ chroot $TEMPMOUNT /bin/bash -c "touch /etc/dracut.conf.d/100-zol.conf"
   echo add_dracutmodules+=" zfs " 
   echo omit_dracutmodules+=" btrfs " 
   #echo install_items+=" /etc/zfs/zroot.key "
-  echo hostonly="no" 
-  echo nofsck="yes" 
-  echo add_dracutmodules+=" zfs " 
-  echo omit_dracutmodules+=" btrfs "
 } > $TEMPMOUNT/etc/dracut.conf.d/100-zol.conf
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/zfsbootmenu"
@@ -40,21 +36,21 @@ chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/config.yaml"
   echo "  Versions: 2"
   echo "  Enabled: false"
   echo "Kernel:"
-  echo "  CommandLine: ro quiet loglevel=0"
+  echo "  CommandLine: ro loglevel=0"
 } > $TEMPMOUNT/etc/zfsbootmenu/config.yaml
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/zfsbootmenu/dracut.conf.d"
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf"
 echo 'omit_dracutmodules+=" systemd systemd-initrd dracut-systemd "' > $TEMPMOUNT/etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf
 
-dracut --force
+
 
 generate-zbm
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /boot/efi/EFI/ubuntu"
 chroot $TEMPMOUNT /bin/bash -c "touch /boot/efi/EFI/ubuntu/refind_linux.conf"
-echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=0 ro quiet loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/ubuntu/refind_linux.conf
-echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=-1 ro quiet loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/ubuntu/refind_linux.conf
+echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=0 ro loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/ubuntu/refind_linux.conf
+echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=-1 ro loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/ubuntu/refind_linux.conf
 
 
 #echo ''

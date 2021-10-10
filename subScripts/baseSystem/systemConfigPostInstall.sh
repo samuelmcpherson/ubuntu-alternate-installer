@@ -20,6 +20,8 @@ then
 
     chroot $TEMPMOUNT /bin/bash -c "echo REMAKE_INITRD=yes > /etc/dkms/zfs.conf"
 
+    chroot $TEMPMOUNT /bin/bash -c "sed -i 's,LOAD_KEXEC=false,LOAD_KEXEC=true,' /etc/default/kexec"
+
     cp /etc/hostid $TEMPMOUNT/etc/hostid
 
     chroot $TEMPMOUNT /bin/bash -c "zpool set cachefile=/etc/zfs/zpool.cache zroot"

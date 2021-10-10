@@ -3,7 +3,7 @@
 
 chroot $TEMPMOUNT /bin/bash -c "/usr/bin/rsync -a /boot/efi/ /boot/efi2"
 
-chroot $TEMPMOUNT /bin/bash -c "efibootmgr -cgd $EFIPART_2 -p 1 -L 'ubuntu-2' -l '\EFI\ubuntu\grubx64.efi'"
+#chroot $TEMPMOUNT /bin/bash -c "efibootmgr -cgd $EFIPART_2 -p 1 -L 'ubuntu-2' -l '\EFI\ubuntu\grubx64.efi'"
 
 
 echo "[Unit]" >> $TEMPMOUNT/usr/lib/systemd/system/efis-sync.path
