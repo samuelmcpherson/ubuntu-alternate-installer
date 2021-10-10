@@ -42,9 +42,9 @@ echo "deb http://deb.debian.org/debian $RELEASE-backports main contrib non-free"
 echo "deb-src http://deb.debian.org/debian $RELEASE-backports main contrib" >> $TEMPMOUNT/etc/apt/sources.list.d/$RELEASE-backports.list
 
 
-#mkdir $TEMPMOUNT/etc/apt/preferences.d
+mkdir $TEMPMOUNT/etc/apt/preferences.d
 
 
-#echo "Package: libnvpair3linux libuutil3linux libzfs4linux libzfslinux-dev libzpool4linux python3-pyzfs pyzfs-doc spl spl-dkms zfs-dkms zfs-dracut zfs-initramfs zfs-test zfsutils-linux zfsutils-linux-dev zfs-zed" > $TEMPMOUNT/etc/apt/preferences.d/90_zfs
-#echo "Pin: release n=$RELEASE-backports" >> $TEMPMOUNT/etc/apt/preferences.d/90_zfs
-#echo "Pin-Priority: 990" >> $TEMPMOUNT/etc/apt/preferences.d/90_zfs
+echo "Package: libnvpair3linux libuutil3linux libzfs4linux libzfslinux-dev libzpool4linux python3-pyzfs pyzfs-doc spl spl-dkms zfs-dkms zfs-dracut zfs-initramfs zfs-test zfsutils-linux zfsutils-linux-dev zfs-zed" > $TEMPMOUNT/etc/apt/preferences.d/90_zfs
+echo "Pin: release n=$RELEASE-backports" >> $TEMPMOUNT/etc/apt/preferences.d/90_zfs
+echo "Pin-Priority: 990" >> $TEMPMOUNT/etc/apt/preferences.d/90_zfs

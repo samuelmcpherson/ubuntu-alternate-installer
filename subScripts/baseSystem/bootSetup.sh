@@ -10,10 +10,7 @@ chroot $TEMPMOUNT /bin/bash -c "echo yes | cpan 'YAML::PP'"
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/dracut.conf.d"
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/dracut.conf.d/100-zol.conf"
 {    
-  echo "hostonly=\"no\"" 
-  echo "nofsck=\"yes\"" 
-  echo "add_dracutmodules+=\" zfs \"" 
-  echo "omit_dracutmodules+=\" btrfs systemd systemd-initrd dracut-systemd \"" 
+  echo "omit_dracutmodules+=\" systemd systemd-initrd dracut-systemd \"" 
   #echo "install_items+=\" /etc/zfs/zroot.key \""
 } > $TEMPMOUNT/etc/dracut.conf.d/100-zol.conf
 
@@ -46,7 +43,7 @@ chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/dracut.conf.d/zfsbootmenu
   echo "hostonly=\"no\"" 
   echo "nofsck=\"yes\"" 
   echo "add_dracutmodules+=\" zfs \"" 
-  echo "omit_dracutmodules+=\" btrfs systemd systemd-initrd dracut-systemd \"" 
+  echo "omit_dracutmodules+=\" btrfs \"" 
   #echo "install_items+=\" /etc/zfs/zroot.key \"" 
 } > $TEMPMOUNT/etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf
 
