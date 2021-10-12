@@ -53,7 +53,7 @@ export ZFS=yes
 
     export DISK2=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAGB51863E
 
-export RELEASE=bullseye # groovy, focal or hirsute
+export RELEASE=bookworm # groovy, focal or hirsute
 
 export LANG=en_US.UTF-8
 

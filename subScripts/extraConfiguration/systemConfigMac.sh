@@ -1,6 +1,6 @@
 #!/bin/bash
 
-chroot $TEMPMOUNT /bin/bash -c "apt install -y bcmwl-kernel-source mbpfan && echo '---> apt install bcmwl-kernel-source mbpfan succeeded <--------------------------------------------------------------' || { echo 'apt install bcmwl-kernel-source mbpfan failed'; exit 1; }" || exit 1
+chroot $TEMPMOUNT /bin/bash -c "apt install -y firmware-b43-installer mbpfan && echo '---> apt install firmware-b43-installer mbpfan succeeded <--------------------------------------------------------------' || { echo 'apt install firmware-b43-installer mbpfan failed'; exit 1; }" || exit 1
 
 chroot $TEMPMOUNT /bin/bash -c "systemctl unmask mbpfan"
 
@@ -22,4 +22,11 @@ then
     chroot $TEMPMOUNT /bin/bash -c "echo options hid_apple swap_opt_cmd=1 >> /etc/modprobe.d/hid_apple.conf"
 fi
 
-chroot $TEMPMOUNT /bin/bash -c "update-initramfs -c -k all"
+chroot $TEMPMOUNT /bin/bash -c "dracut --force --kver $(ls $TEMPMOUNT/lib/modules)"
+
+chroot $TEMPMOUNT /bin/bash -c "generate-zbm"
+
+if [[ -n "$MIRROR" ]]
+then 
+    chroot $TEMPMOUNT /bin/bash -c "/usr/bin/rsync -a /boot/efi/ /boot/efi2"
+fi

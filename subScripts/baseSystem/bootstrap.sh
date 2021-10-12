@@ -24,6 +24,13 @@ debootstrap $RELEASE $TEMPMOUNT && echo "---> Successfully bootstrapped system a
 #echo "          addresses: [$GATEWAY]" >> $TEMPMOUNT/etc/netplan/01-netcfg.yaml
 #fi
 
+mkdir -p $TEMPMOUNT/etc/network/interfaces.d
+touch $TEMPMOUNT/etc/network/interfaces.d/$NETDEVICE
+{
+echo "auto $NETDEVICE"
+echo "iface $NETDEVICE inet dhcp"
+} > $TEMPMOUNT/etc/network/interfaces.d/$NETDEVICE
+
 cp /etc/hostid $TEMPMOUNT/etc/hostid
 cp /etc/resolv.conf $TEMPMOUNT/etc/resolv.conf
 
@@ -38,8 +45,8 @@ echo "deb http://deb.debian.org/debian $RELEASE-updates main contrib non-free" >
 echo "deb-src http://deb.debian.org/debian $RELEASE-updates main contrib non-free" >> $TEMPMOUNT/etc/apt/sources.list
 
 
-echo "deb http://deb.debian.org/debian $RELEASE-backports main contrib non-free" > $TEMPMOUNT/etc/apt/sources.list.d/$RELEASE-backports.list
-echo "deb-src http://deb.debian.org/debian $RELEASE-backports main contrib" >> $TEMPMOUNT/etc/apt/sources.list.d/$RELEASE-backports.list
+echo "#deb http://deb.debian.org/debian $RELEASE-backports main contrib non-free" > $TEMPMOUNT/etc/apt/sources.list.d/$RELEASE-backports.list
+echo "#deb-src http://deb.debian.org/debian $RELEASE-backports main contrib" >> $TEMPMOUNT/etc/apt/sources.list.d/$RELEASE-backports.list
 
 
 #mkdir $TEMPMOUNT/etc/apt/preferences.d

@@ -1,19 +1,20 @@
 #!/bin/bash
 
-chroot $TEMPMOUNT /bin/bash -c "zfs set org.zfsbootmenu:commandline=\"spl_hostid=$( hostid ) ro quiet\" zroot/ROOT"
-
 chroot $TEMPMOUNT /bin/bash -c "cd /root && git clone 'https://github.com/zbm-dev/zfsbootmenu.git'"
 chroot $TEMPMOUNT /bin/bash -c "cd /root/zfsbootmenu && make install"
 
 chroot $TEMPMOUNT /bin/bash -c "echo yes | cpan 'YAML::PP'"
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/dracut.conf.d"
+
+chroot $TEMPMOUNT /bin/bash -c "rm /etc/dracut.conf.d/*"
+
 chroot $TEMPMOUNT /bin/bash -c "touch /etc/dracut.conf.d/100-zol.conf"
 {    
   echo "hostonly=\"no\"" 
   echo "nofsck=\"yes\"" 
   echo "add_dracutmodules+=\" zfs \"" 
-  echo "omit_dracutmodules+=\" btrfs systemd systemd-initrd dracut-systemd \"" 
+  echo "omit_dracutmodules+=\" btrfs \"" 
   #echo "install_items+=\" /etc/zfs/zroot.key \""
 } > $TEMPMOUNT/etc/dracut.conf.d/100-zol.conf
 
@@ -40,17 +41,16 @@ chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/config.yaml"
   echo "  CommandLine: ro quiet loglevel=0"
 } > $TEMPMOUNT/etc/zfsbootmenu/config.yaml
 
-chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/zfsbootmenu/dracut.conf.d"
-chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf"
-{    
-  echo "hostonly=\"no\"" 
-  echo "nofsck=\"yes\"" 
-  echo "add_dracutmodules+=\" zfs \"" 
-  echo "omit_dracutmodules+=\" btrfs systemd systemd-initrd dracut-systemd \"" 
+#chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/zfsbootmenu/dracut.conf.d"
+#chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf"
+# {    
+#  echo "omit_dracutmodules+=\" systemd systemd-initrd dracut-systemd \"" 
   #echo "install_items+=\" /etc/zfs/zroot.key \"" 
-} > $TEMPMOUNT/etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf
+#} > $TEMPMOUNT/etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf
 
-chroot $TEMPMOUNT /bin/bash -c "dracut --force"
+#chroot $TEMPMOUNT /bin/bash -c "ls -1 /lib/modules | while read kernel_version; do dkms autoinstall -k $kernel_version; done"
+
+chroot $TEMPMOUNT /bin/bash -c "dracut --force --kver $(ls $TEMPMOUNT/lib/modules)"
 
 chroot $TEMPMOUNT /bin/bash -c "generate-zbm"
 
@@ -58,9 +58,8 @@ chroot $TEMPMOUNT /bin/bash -c "refind-install"
 
 chroot $TEMPMOUNT /bin/bash -c "mkdir -p /boot/efi/EFI/debian"
 chroot $TEMPMOUNT /bin/bash -c "touch /boot/efi/EFI/debian/refind_linux.conf"
-echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=0 ro loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
-echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) zbm.timeout=-1 ro loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
-
+echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot zbm.import_policy=hostid zbm.set_hostid zbm.timeout=5 ro quiet loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
+echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot zbm.import_policy=hostid zbm.set_hostid zbm.show ro quiet loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
 
 #echo ''
 #echo ''
