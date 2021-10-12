@@ -41,10 +41,20 @@ chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/config.yaml"
   echo "  CommandLine: ro quiet loglevel=0"
 } > $TEMPMOUNT/etc/zfsbootmenu/config.yaml
 
+<<<<<<< HEAD
 #chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/zfsbootmenu/dracut.conf.d"
 #chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf"
 # {    
 #  echo "omit_dracutmodules+=\" systemd systemd-initrd dracut-systemd \"" 
+=======
+chroot $TEMPMOUNT /bin/bash -c "mkdir -p /etc/zfsbootmenu/dracut.conf.d"
+chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf"
+{    
+  echo "hostonly=\"no\"" 
+  echo "nofsck=\"yes\"" 
+  echo "add_dracutmodules+=\" zfs \"" 
+  echo "omit_dracutmodules+=\" btrfs \"" 
+>>>>>>> 6fdf010d55e4448231fd35c3ce87c59ebabc45c4
   #echo "install_items+=\" /etc/zfs/zroot.key \"" 
 #} > $TEMPMOUNT/etc/zfsbootmenu/dracut.conf.d/zfsbootmenu.conf
 
