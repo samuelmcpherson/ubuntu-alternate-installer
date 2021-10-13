@@ -20,7 +20,10 @@ teamviewer_amd64.deb                   100%[====================================
 13+1 records in                                                                                                                                             
 13+1 records out                                                                                                                                            
 6874 bytes (6.9 kB, 6.7 KiB) copied, 1.70949 s, 4.0 kB/s                                                                                                    
---2021-10-12 13:34:38--  https://protonmail.com/download/protonmail-bridge_1.8.9-1_amd64.deb                                                                
+--2021-10-12 13:34:38--  https://protonmail.com/download/protonmail-bridge_1.8.9-1_amd64.deb
+
+https://protonmail.com/download/bridge/protonmail-bridge_1.8.9-1_amd64.deb
+
 Resolving protonmail.com (protonmail.com)... 185.70.42.12                                                                                                   
 Connecting to protonmail.com (protonmail.com)|185.70.42.12|:443... connected.                                                                               
 HTTP request sent, awaiting response... 404 Not Found                                                                                                       
@@ -59,7 +62,7 @@ zoom_amd64.deb                         100%[====================================
 
 2021-10-12 13:34:53 (10.3 MB/s) - ‘zoom_amd64.deb’ saved [55783248/55783248]
 
-
+                         https://github.com/jgraph/drawio-desktop/releases/download/v15.4.0/drawio-amd64-15.4.0.deb
 --2021-10-12 13:34:53--  https://github.com/jgraph/drawio-desktop/releases/download/v15.4.0/draw.io-amd64-15.4.0.deb
 Resolving github.com (github.com)... 192.30.255.112
 Connecting to github.com (github.com)|192.30.255.112|:443... connected.
