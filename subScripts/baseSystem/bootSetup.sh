@@ -121,7 +121,7 @@ chroot $TEMPMOUNT /bin/bash -c "touch /etc/zfsbootmenu/dracut.conf.d/dropbear.co
 	echo '##The last line is optional and assumes the specified user provides an authorized_keys file'
 	echo '##that will determine remote access to the ZFSBootMenu image.'
 	echo '##Note that login to dropbear is "root" regardless of which authorized_keys is used.'
-	echo '#dropbear_acl=/home/${user}/.ssh/authorized_keys'
+	echo "dropbear_acl=/home/$USER/.ssh/authorized_keys"
 
 } > $TEMPMOUNT/etc/zfsbootmenu/dracut.conf.d/dropbear.conf
 		
