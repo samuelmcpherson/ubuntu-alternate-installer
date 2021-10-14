@@ -15,4 +15,3 @@ chroot $TEMPMOUNT /bin/bash -c "chown -R $USER:users /home/$USER/"
 chroot $TEMPMOUNT /bin/bash -c "echo root:$ROOTPASS | chpasswd"
 
 chroot $TEMPMOUNT /bin/bash -c "echo $USER:$USERPASS | chpasswd"
-

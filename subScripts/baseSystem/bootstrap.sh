@@ -24,12 +24,15 @@ debootstrap $RELEASE $TEMPMOUNT && echo "---> Successfully bootstrapped system a
 #echo "          addresses: [$GATEWAY]" >> $TEMPMOUNT/etc/netplan/01-netcfg.yaml
 #fi
 
-mkdir -p $TEMPMOUNT/etc/network/interfaces.d
-touch $TEMPMOUNT/etc/network/interfaces.d/$NETDEVICE
-{
-echo "auto $NETDEVICE"
-echo "iface $NETDEVICE inet dhcp"
-} > $TEMPMOUNT/etc/network/interfaces.d/$NETDEVICE
+if [[ -z "$DESKTOP" ]]
+then 
+    mkdir -p $TEMPMOUNT/etc/network/interfaces.d
+    touch $TEMPMOUNT/etc/network/interfaces.d/$NETDEVICE
+    {
+    echo "auto $NETDEVICE"
+    echo "iface $NETDEVICE inet dhcp"
+    } > $TEMPMOUNT/etc/network/interfaces.d/$NETDEVICE
+fi
 
 cp /etc/hostid $TEMPMOUNT/etc/hostid
 cp /etc/resolv.conf $TEMPMOUNT/etc/resolv.conf

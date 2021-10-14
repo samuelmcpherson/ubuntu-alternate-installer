@@ -53,3 +53,5 @@ then
 
     chroot $TEMPMOUNT /bin/bash -c "chown -R $USER:users /home/$USER"
 fi
+
+sed -i 's/PATH="\/usr\/local\/bin:\/usr\/bin:\/bin:\/usr\/games"/PATH="\/usr\/local\/sbin:\/usr\/local\/bin:\/usr\/sbin:\/usr\/bin:\/sbin:\/bin"/g' $TEMPMOUNT/etc/zsh/zshenv
