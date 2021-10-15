@@ -10,27 +10,27 @@ chroot $TEMPMOUNT /bin/bash -c "apt install -y texlive-base texlive-latex-base t
 chroot $TEMPMOUNT /bin/bash -c "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
 
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub com.github.eloston.ungoogledchromium"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.github.eloston.ungoogledchromium"
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub com.todoist.todoist"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.todoist.todoist"
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub com.vscodium.codium"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.vscodium.codium"
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub com.slack.slack"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.slack.slack"
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub ch.protonmail.protonmail-bridge"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub ch.protonmail.protonmail-bridge"
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub com.jgraph.drawio.desktop"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.jgraph.drawio.desktop"
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub com.discordapp.discord"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.discordapp.discord"
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub com.github.xournalpp.xournalpp"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.github.xournalpp.xournalpp"
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub us.zoom.zoom"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub us.zoom.zoom"
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub tech.feliciano.pocket-casts"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub tech.feliciano.pocket-casts"
 
-chroot $TEMPMOUNT /bin/bash -c "flatpack install -y flathub com.axosoft.gitkraken"
+chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.axosoft.gitkraken"
 
 
 
