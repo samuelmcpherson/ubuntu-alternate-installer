@@ -1,5 +1,8 @@
 #!/bin/bash
 
+zfs create -o canmount=on -o mountpoint=/home/ansible zroot/DATA/debian/home/ansible
+
+mkdir $TEMPMOUNT/home/ansible
 
 chroot $TEMPMOUNT /bin/bash -c "apt install -y ansible && echo '---> apt install ansible succeeded <--------------------------------------------------------------' || { echo 'apt install ansible failed'; exit 1; }" || exit 1
 
