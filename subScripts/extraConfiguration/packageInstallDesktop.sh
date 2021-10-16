@@ -7,32 +7,34 @@ chroot $TEMPMOUNT /bin/bash -c "apt -y install flatpak xfsprogs wireshark-doc fi
 chroot $TEMPMOUNT /bin/bash -c "apt install -y texlive-base texlive-latex-base texlive-latex-extra texlive-latex-extra-doc texlive-latex-base-doc texlive-fonts-extra texlive-bibtex-extra && echo '---> apt install texlive-base texlive-latex-base texlive-latex-extra texlive-latex-extra-doc texlive-latex-base-doc texlive-fonts-extra texlive-bibtex-extra succeeded <--------------------------------------------------------------' || echo '---> apt install texlive-base texlive-latex-base texlive-latex-extra texlive-latex-extra-doc texlive-latex-base-doc texlive-fonts-extra texlive-bibtex-extra failed <--------------------------------------------------------------'"
 
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
+chroot $TEMPMOUNT /bin/bash -c "{
+    
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.github.eloston.ungoogledchromium"
+    flatpak install -y flathub com.github.eloston.ungoogledchromium/x86_64/stable
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.todoist.todoist"
+    flatpak install -y flathub com.todoist.todoist
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.vscodium.codium"
+    flatpak install -y flathub com.vscodium.codium
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.slack.slack"
+    flatpak install -y flathub com.slack.slack
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub ch.protonmail.protonmail-bridge"
+    flatpak install -y flathub ch.protonmail.protonmail-bridge
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.jgraph.drawio.desktop"
+    flatpak install -y flathub com.jgraph.drawio.desktop
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.discordapp.discord"
+    flatpak install -y flathub com.discordapp.discord
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.github.xournalpp.xournalpp"
+    flatpak install -y flathub com.github.xournalpp.xournalpp
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub us.zoom.zoom"
+    flatpak install -y flathub us.zoom.zoom
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub tech.feliciano.pocket-casts"
+    flatpak install -y flathub tech.feliciano.pocket-casts
 
-chroot $TEMPMOUNT /bin/bash -c "flatpak install -y flathub com.axosoft.gitkraken"
+    flatpak install -y flathub com.axosoft.gitkraken
 
-
+}"
 
 
 # old-non-repo-apps
