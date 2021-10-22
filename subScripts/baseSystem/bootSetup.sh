@@ -143,39 +143,3 @@ chroot $TEMPMOUNT /bin/bash -c "mkdir -p /boot/efi/EFI/debian"
 chroot $TEMPMOUNT /bin/bash -c "touch /boot/efi/EFI/debian/refind_linux.conf"
 echo "\"Boot default\"  \"zfsbootmenu:POOL=zroot zbm.import_policy=hostid zbm.set_hostid zbm.timeout=30 ro quiet loglevel=0\"" > $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
 echo "\"Boot to menu\"  \"zfsbootmenu:POOL=zroot zbm.import_policy=hostid zbm.set_hostid zbm.show ro quiet loglevel=0\"" >> $TEMPMOUNT/boot/efi/EFI/debian/refind_linux.conf
-
-#echo ''
-#echo ''
-#echo "/etc/zfs/zed.d/history_event-zfs-list-cacher.sh"
-#echo ''
-#cat $TEMPMOUNT/etc/zfs/zed.d/history_event-zfs-list-cacher.sh
-#echo ''
-#echo ''
-#echo "/etc/zfs/zfs-list.cache/bpool"
-#echo ''
-#cat $TEMPMOUNT/etc/zfs/zfs-list.cache/bpool
-#echo ''
-#echo ''
-#echo "/etc/zfs/zfs-list.cache/rpool"
-#echo ''
-#cat $TEMPMOUNT/etc/zfs/zfs-list.cache/rpool
-#echo ''
-#echo ''
-
-#if [ ! -f "$TEMPMOUNT/etc/zfs/zed.d/history_event-zfs-list-cacher.sh" ]
-#then 
-#    echo "/etc/zfs/zed.d/history_event-zfs-list-cacher.sh does not exist"
-#    exit 1
-#fi
-
-#if [ ! -f "$TEMPMOUNT/etc/zfs/zfs-list.cache/bpool" ]
-#then 
-#    echo "/etc/zfs/zfs-list.cache/bpool does not exist"
-#    exit 1
-#fi
-
-#if [ ! -f "$TEMPMOUNT/etc/zfs/zfs-list.cache/rpool" ]
-#then 
-#    echo "/etc/zfs/zfs-list.cache/rpool does not exist"
-#    exit 1
-#fi

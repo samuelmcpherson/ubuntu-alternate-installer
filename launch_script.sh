@@ -6,6 +6,25 @@ export USERPASS=$2
 
 export ROOTPASS=$3
 
+logTrim()
+{
+sed -i '/\b\(^Get\|^Preparing\|^Setting\|^Unpacking\|^Selecting\|^Updating\|^Processing\)\b\|\(^I:\)/d' "$OUTPUTLOG-$CURRENTFUNC-log.txt"
+
+sed -i '/Running in chroot/d' "$OUTPUTLOG-$CURRENTFUNC-log.txt"
+
+sed -i '/(Reading database/d' "$OUTPUTLOG-$CURRENTFUNC-log.txt"
+
+sed -i -e  '/^[[:blank:]]\+[[:digit:]]\+/d' "$OUTPUTLOG-$CURRENTFUNC-log.txt"
+}
+
+logExport()
+{
+echo "" >> "$OUTPUTLOG-log.txt"
+cat "$OUTPUTLOG-$CURRENTFUNC-log.txt" >> "$OUTPUTLOG-log.txt"
+echo "" >> "$OUTPUTLOG-log.txt"
+cat "$OUTPUTLOG-$CURRENTFUNC-log.txt" >> "$OUTPUTLOG-log.txt"
+}
+
 menuStart()
 {
 RUNCOUNT=0    
@@ -39,7 +58,7 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" 2>&1 | tee -a "$OUTPUTLOG-$CURRENTFUNC-log.txt"; CURRENTFUNCSTATUS=${PIPESTATUS[0]}; logTrim ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
   3) /bin/bash ;;
   4) break ;;
@@ -48,8 +67,6 @@ case $n in
 esac
 
 echo ''
-
-CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -92,10 +109,13 @@ echo "select the operation ************"
 echo ""
 echo "  1)Run $CURRENTFUNC $CURRENTARGS"
 echo "  2)Edit $CURRENTFUNC"
-echo "  3)Open Shell to live environment"
-echo "  4)Skip running $CURRENTFUNC $CURRENTARGS and continue to next function" 
-echo "  5)Go back to $LASTFUNC $LASTARGS"
-echo "  6)Abort install"
+echo "  3)View logs from $CURRENTFUNC $CURRENTARGS"
+echo "  4)View logs from $LASTFUNC $LASTARGS"
+echo "  5)View full log"
+echo "  6)Open Shell to live environment"
+echo "  7)Skip running $CURRENTFUNC $CURRENTARGS and continue to next function" 
+echo "  8)Go back to $LASTFUNC $LASTARGS"
+echo "  9)Abort install"
 
 read -rt $TIMEOUT n
 if [ -z "$n" ]
@@ -103,18 +123,19 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" 2>&1 | tee -a "$OUTPUTLOG-$CURRENTFUNC-log.txt"; CURRENTFUNCSTATUS=${PIPESTATUS[0]}; logTrim ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
-  3) /bin/bash ;;
-  4) break ;;
-  5) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuPreSystemPrev ;;
-  6) exit 1 ;;
+  3) less "$OUTPUTLOG-$CURRENTFUNC-log.txt" ;;
+  4) less "$OUTPUTLOG-$LASTFUNC-log.txt" ;;
+  5) less "$OUTPUTLOG-log.txt" ;;
+  6) /bin/bash ;;
+  7) break ;;
+  8) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuPreSystemPrev ;;
+  9) exit 1 ;;
   *) echo "invalid option";;
 esac
 
 echo ''
-
-CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -158,9 +179,12 @@ echo "select the operation ************"
 echo ""
 echo "  1)Run $CURRENTFUNC $CURRENTARGS"
 echo "  2)Edit $CURRENTFUNC"
-echo "  3)Open Shell to live environment"
-echo "  4)Skip forward to $NEXTFUNC $NEXTARGS" 
-echo "  5)Abort install"
+echo "  3)View logs from $CURRENTFUNC $CURRENTARGS"
+echo "  4)View logs from $LASTFUNC $LASTARGS"
+echo "  5)View full log"
+echo "  6)Open Shell to live environment"
+echo "  7)Skip forward to $NEXTFUNC $NEXTARGS" 
+echo "  8)Abort install"
 
 read -rt $TIMEOUT n
 if [ -z "$n" ]
@@ -168,17 +192,18 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" 2>&1 | tee -a "$OUTPUTLOG-$CURRENTFUNC-log.txt"; CURRENTFUNCSTATUS=${PIPESTATUS[0]}; logTrim ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
-  3) /bin/bash ;;
-  4) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
-  5) exit 1 ;;
+  3) less "$OUTPUTLOG-$CURRENTFUNC-log.txt" ;;
+  4) less "$OUTPUTLOG-$LASTFUNC-log.txt" ;;
+  5) less "$OUTPUTLOG-log.txt" ;;
+  6) /bin/bash ;;
+  7) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
+  8) exit 1 ;;
   *) echo "invalid option";;
 esac
 
 echo ''
-
-CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -222,11 +247,14 @@ echo "select the operation ************"
 echo ""
 echo "  1)Run $CURRENTFUNC $CURRENTARGS"
 echo "  2)Edit $CURRENTFUNC"
-echo "  3)**ONLY AVAILABLE FOR ZFS INSTALLS** Rollback system state to snapshot from before $CURRENTFUNC $CURRENTARGS was run"
-echo "  4)Open Shell to live environment"
-echo "  5)Skip running $CURRENTFUNC $CURRENTARGS and continue to next function" 
-echo "  6)Go back to $LASTFUNC $LASTARGS"
-echo "  7)Abort install"
+echo "  3)View logs from $CURRENTFUNC $CURRENTARGS"
+echo "  4)View logs from $LASTFUNC $LASTARGS"
+echo "  5)View full log"
+echo "  6)**ONLY AVAILABLE FOR ZFS INSTALLS** Rollback system state to snapshot from before $CURRENTFUNC $CURRENTARGS was run"
+echo "  7)Open Shell to live environment"
+echo "  8)Skip running $CURRENTFUNC $CURRENTARGS and continue to next function" 
+echo "  9)Go back to $LASTFUNC $LASTARGS"
+echo "  10)Abort install"
 
 read -rt $TIMEOUT n
 if [ -z "$n" ]
@@ -234,19 +262,20 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" 2>&1 | tee -a "$OUTPUTLOG-$CURRENTFUNC-log.txt"; CURRENTFUNCSTATUS=${PIPESTATUS[0]}; logTrim ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
-  4) /bin/bash ;;
-  5) break ;;
-  6) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuPreSystemPostZfsPrev ;;
-  7) exit 1 ;;
+  3) less "$OUTPUTLOG-$CURRENTFUNC-log.txt" ;;
+  4) less "$OUTPUTLOG-$LASTFUNC-log.txt" ;;
+  5) less "$OUTPUTLOG-log.txt" ;;
+  6) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
+  7) /bin/bash ;;
+  8) break ;;
+  9) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuPreSystemPostZfsPrev ;;
+  10) exit 1 ;;
   *) echo "invalid option";;
 esac
 
 echo ''
-
-CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -290,10 +319,13 @@ echo "select the operation ************"
 echo ""
 echo "  1)Run $CURRENTFUNC $CURRENTARGS"
 echo "  2)Edit $CURRENTFUNC $CURRENTARGS"
-echo "  3)**ONLY AVAILABLE FOR ZFS INSTALLS** Rollback system state to snapshot from before $CURRENTFUNC $CURRENTARGS was run"
-echo "  4)Open Shell to live environment"
-echo "  5)Skip forward to $NEXTFUNC $NEXTARGS" 
-echo "  6)Abort install"
+echo "  3)View logs from $CURRENTFUNC $CURRENTARGS"
+echo "  4)View logs from $LASTFUNC $LASTARGS"
+echo "  5)View full log"
+echo "  6)**ONLY AVAILABLE FOR ZFS INSTALLS** Rollback system state to snapshot from before $CURRENTFUNC $CURRENTARGS was run"
+echo "  7)Open Shell to live environment"
+echo "  8)Skip forward to $NEXTFUNC $NEXTARGS" 
+echo "  9)Abort install"
 
 read -rt $TIMEOUT n
 if [ -z "$n" ]
@@ -301,18 +333,19 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" 2>&1 | tee -a "$OUTPUTLOG-$CURRENTFUNC-log.txt"; CURRENTFUNCSTATUS=${PIPESTATUS[0]}; logTrim ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
-  4) /bin/bash ;;
-  5) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
-  6) exit 1 ;;
+  3) less "$OUTPUTLOG-$CURRENTFUNC-log.txt" ;;
+  4) less "$OUTPUTLOG-$LASTFUNC-log.txt" ;;
+  5) less "$OUTPUTLOG-log.txt" ;;
+  6) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
+  7) /bin/bash ;;
+  8) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
+  9) exit 1 ;;
   *) echo "invalid option";;
 esac
 
 echo ''
-
-CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -356,12 +389,15 @@ echo "select the operation ************"
 echo ""
 echo "  1)Run $CURRENTFUNC $CURRENTARGS"
 echo "  2)Edit $CURRENTFUNC $CURRENTARGS"
-echo "  3)**ONLY AVAILABLE FOR ZFS INSTALLS** Rollback system state to snapshot from before $CURRENTFUNC $CURRENTARGS was run"
-echo "  4)Open Shell to live environment"
-echo "  5)Open chroot to current install"
-echo "  6)Skip running $CURRENTFUNC $CURRENTARGS and continue to next function" 
-echo "  7)Go back to $LASTFUNC $LASTARGS"
-echo "  8)Abort install"
+echo "  3)View logs from $CURRENTFUNC $CURRENTARGS"
+echo "  4)View logs from $LASTFUNC $LASTARGS"
+echo "  5)View full log"
+echo "  6)**ONLY AVAILABLE FOR ZFS INSTALLS** Rollback system state to snapshot from before $CURRENTFUNC $CURRENTARGS was run"
+echo "  7)Open Shell to live environment"
+echo "  8)Open chroot to current install"
+echo "  9)Skip running $CURRENTFUNC $CURRENTARGS and continue to next function" 
+echo "  10)Go back to $LASTFUNC $LASTARGS"
+echo "  11)Abort install"
 
 read -rt $TIMEOUT n
 if [ -z "$n" ]
@@ -369,19 +405,20 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" 2>&1 | tee -a "$OUTPUTLOG-$CURRENTFUNC-log.txt"; CURRENTFUNCSTATUS=${PIPESTATUS[0]}; logTrim ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
-  4) /bin/bash ;;
-  5) chroot $TEMPMOUNT /bin/bash ;;
-  6) break ;;
-  7) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuFullPrev ;;
-  8) exit 1 ;;
+  3) less "$OUTPUTLOG-$CURRENTFUNC-log.txt" ;;
+  4) less "$OUTPUTLOG-$LASTFUNC-log.txt" ;;
+  5) less "$OUTPUTLOG-log.txt" ;;
+  6) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
+  7) /bin/bash ;;
+  8) chroot $TEMPMOUNT /bin/bash ;;
+  9) break ;;
+  10) NEXTFUNC=$CURRENTFUNC; NEXTARGS=$CURRENTARGS; CURRENTFUNC=$LASTFUNC; CURRENTARGS=$LASTARGS; menuFullPrev ;;
+  11) exit 1 ;;
 esac
 
 echo ''
-
-CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -424,11 +461,14 @@ echo "select the operation ************"
 echo ""
 echo "  1)Run $CURRENTFUNC $CURRENTARGS"
 echo "  2)Edit $CURRENTFUNC $CURRENTARGS"
-echo "  3)**ONLY AVAILABLE FOR ZFS INSTALLS** Rollback system state to snapshot from before $CURRENTFUNC $CURRENTARGS was run"
-echo "  4)Open Shell to live environment"
-echo "  5)Open chroot to current install"
-echo "  6)Skip forward to $NEXTFUNC $NEXTARGS" 
-echo "  7)Abort install"
+echo "  3)View logs from $CURRENTFUNC $CURRENTARGS"
+echo "  4)View logs from $LASTFUNC $LASTARGS"
+echo "  5)View full log"
+echo "  6)**ONLY AVAILABLE FOR ZFS INSTALLS** Rollback system state to snapshot from before $CURRENTFUNC $CURRENTARGS was run"
+echo "  7)Open Shell to live environment"
+echo "  8)Open chroot to current install"
+echo "  9)Skip forward to $NEXTFUNC $NEXTARGS" 
+echo "  10)Abort install"
 
 read -rt $TIMEOUT n
 if [ -z "$n" ]
@@ -436,18 +476,19 @@ then
     n=$DEFAULT
 fi
 case $n in
-  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" ;;
+  1) "$SCRIPTDIR/subScripts/$CURRENTFUNC" "$CURRENTARGS" 2>&1 | tee -a "$OUTPUTLOG-$CURRENTFUNC-log.txt"; CURRENTFUNCSTATUS=${PIPESTATUS[0]}; logTrim ;;
   2) vim "$SCRIPTDIR/subScripts/$CURRENTFUNC" ;;
-  3) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
-  4) /bin/bash ;;
-  5) chroot $TEMPMOUNT /bin/bash ;;
-  6) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
-  7) exit 1 ;;
+  3) less "$OUTPUTLOG-$CURRENTFUNC-log.txt" ;;
+  4) less "$OUTPUTLOG-$LASTFUNC-log.txt" ;;
+  5) less "$OUTPUTLOG-log.txt" ;;  
+  6) if [ -n "$ZFS" ]; then umount -Rl $TEMPMOUNT; $SCRIPTDIR/zfs-recursive-restore.sh zroot@"$(echo $CURRENTFUNC | cut -d '/' -f2)"; else echo "NOT A ZFS INSTALL"; fi ;;
+  7) /bin/bash ;;
+  8) chroot $TEMPMOUNT /bin/bash ;;
+  9) LASTFUNC=$CURRENTFUNC; LASTARGS=$CURRENTARGS; CURRENTFUNC=$NEXTFUNC; CURRENTARGS=$NEXTARGS; break ;;
+  10) exit 1 ;;
 esac
 
 echo ''
-
-CURRENTFUNCSTATUS=$?
 
 if [ $n = 1 ]
 then
@@ -472,6 +513,8 @@ done
 
 source ./script-variables.sh
 
+mkdir -p $LOGDIR
+
 {
 echo "deb http://deb.debian.org/debian $RELEASE main contrib non-free"
 #echo "deb http://deb.debian.org/debian $RELEASE-backports main contrib non-free"
@@ -493,138 +536,126 @@ source ./script-variables.sh
 
 echo "Start $(date +%Y-%m-%d_%H:%M)"
 
-if [ -n "$ZFS" ] && [ -z "$RPART" ] && [ -n "$DISK1" ] && [ -n "$DISK2" ]
+if [ -n "$MANUAL_LAYOUT" ]
 then
 
-    export CURRENTFUNC="baseSystem/diskFormat.sh"
-    export CURRENTARGS=$DISK1
-    echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
-    menuStart
-    
-    export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS
+    echo "Manual storage setup selected: skipping disk setup, system will be installed to $TEMPMOUNT"
 
-
-    export CURRENTFUNC="baseSystem/diskFormat.sh"
-    export CURRENTARGS=$DISK2
-	menuPreSystem
-    
-    export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS  
-
-
-    export CURRENTFUNC="baseSystem/zpoolSetup.sh"
-
-    if [ -n "$EFI" ] && [ -z "$BIOS" ]
-    then
-
-        export CURRENTARGS="$DISK1-part2 $DISK2-part2"
-    
-    elif [ -z "$EFI" ] && [ -n "$BIOS" ]
-    then
-
-        export CURRENTARGS="$DISK1-part1 $DISK2-part1"
-
-    else
-    
-        echo "Variables for EFI or BIOS install are both unset, aborting..."
-        exit 1
-
-    fi
-
-    menuPreSystem
-    
-    export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS
-
-    if [ -n "$EFI" ] && [ -z "$BIOS" ] 
-    then
-        export EFIPART="$DISK1-part1"
-        export EFIPART_2="$DISK2-part1"
-
-    fi
-
-elif [ -n "$ZFS" ] && [ -z "$RPART" ] && [ -n "$DISK1" ] && [ -z "$DISK2" ]
+elif [ -z "$MANUAL_LAYOUT" ] && [ -n "$ZFS" ] 
 then
 
-    export CURRENTFUNC="baseSystem/diskFormat.sh"
-    export CURRENTARGS=$DISK1
-    echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
-    menuStart
-    
-    export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS
-
-
-    export CURRENTFUNC="baseSystem/zpoolSetup.sh"
-
-    if [ -n "$EFI" ] && [ -z "$BIOS" ]
+    if [ -z "$ZFSPART" ] && [ -n "$DISK1" ] && [ -n "$DISK2" ]
     then
 
-        export CURRENTARGS="$DISK1-part2"
+        export CURRENTFUNC="baseSystem/diskFormat.sh"
+        export CURRENTARGS=$DISK1
+        echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
+        menuStart
     
-    elif [ -z "$EFI" ] && [ -n "$BIOS" ]
+        export LASTFUNC=$CURRENTFUNC
+        export LASTARGS=$CURRENTARGS
+
+
+        export CURRENTFUNC="baseSystem/diskFormat.sh"
+        export CURRENTARGS=$DISK2
+	    menuPreSystem
+    
+        export LASTFUNC=$CURRENTFUNC
+        export LASTARGS=$CURRENTARGS  
+
+
+        export CURRENTFUNC="baseSystem/zpoolSetup.sh"
+
+        if [ -n "$EFI" ] && [ -z "$BIOS" ]
+        then
+
+            export CURRENTARGS="$DISK1-part2 $DISK2-part2"
+    
+        elif [ -z "$EFI" ] && [ -n "$BIOS" ]
+        then
+
+            export CURRENTARGS="$DISK1-part1 $DISK2-part1"
+
+        else
+    
+            echo "Variables for EFI or BIOS install are both unset, aborting..."
+            exit 1
+
+        fi
+
+        menuPreSystem
+    
+        export LASTFUNC=$CURRENTFUNC
+        export LASTARGS=$CURRENTARGS
+
+        if [ -n "$EFI" ] && [ -z "$BIOS" ] 
+        then
+        
+            export EFIPART="$DISK1-part1"
+            export EFIPART_2="$DISK2-part1"
+
+        fi
+
+    elif [ -z "$ZFSPART" ] && [ -n "$DISK1" ] && [ -z "$DISK2" ]
     then
 
-        export CURRENTARGS="$DISK1-part1"
-
-    else
+        export CURRENTFUNC="baseSystem/diskFormat.sh"
+        export CURRENTARGS=$DISK1
+        echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
+        menuStart
     
-        echo "Variables for EFI or BIOS install are both unset, aborting..."
-        exit 1
+        export LASTFUNC=$CURRENTFUNC
+        export LASTARGS=$CURRENTARGS
 
-    fi
 
-    menuPreSystem
+        export CURRENTFUNC="baseSystem/zpoolSetup.sh"
+
+        if [ -n "$EFI" ] && [ -z "$BIOS" ]
+        then
+
+            export CURRENTARGS="$DISK1-part2"
     
-    export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS
+        elif [ -z "$EFI" ] && [ -n "$BIOS" ]
+        then
 
-    if [ -n "$EFI" ] && [ -z "$BIOS" ] 
+            export CURRENTARGS="$DISK1-part1"
+
+        else
+    
+            echo "Variables for EFI or BIOS install are both unset, aborting..."
+            exit 1
+
+        fi
+
+        menuPreSystem
+    
+        export LASTFUNC=$CURRENTFUNC
+        export LASTARGS=$CURRENTARGS
+
+        if [ -n "$EFI" ] && [ -z "$BIOS" ] 
+        then
+            export EFIPART="$DISK1-part1"
+        fi
+
+    elif [ -n "$ZFSPART" ] && [ -z "$DISK1" ] && [ -z "$DISK2" ] 
     then
-        export EFIPART="$DISK1-part1"
-    fi
 
-elif [ -n "$ZFS" ] && [ -n "$RPART" ] && [ -z "$DISK1" ] && [ -z "$DISK2" ] 
-then
-
-    export CURRENTFUNC="baseSystem/zpoolSetup.sh"
-    export CURRENTARGS=$RPART
-    menuPreSystem
+        export CURRENTFUNC="baseSystem/zpoolSetup.sh"
+        export CURRENTARGS=$ZFSPART
+        menuPreSystem
     
-    export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS
+        export LASTFUNC=$CURRENTFUNC
+        export LASTARGS=$CURRENTARGS
    
 
-elif [ -z "$ZFS" ] 
-then 
 
-
-    export CURRENTFUNC="baseSystem/diskFormat.sh"
-    export CURRENTARGS=$DISK1
-    echo "Beginning automanted ubuntu zfs on root install with $CURRENTFUNC $CURRENTARGS"
-    menuStart
+    else
+	
+        echo "Failed to setup disks correctly"
+	    exit 1
     
-    export LASTFUNC=$CURRENTFUNC
-    export LASTARGS=$CURRENTARGS
-
-    if [ -n "$EFI" ] && [ -z "$BIOS" ]
-    then
-
-        export EFIPART="$DISK1-part1"
-
-        export EXT4ROOT="$DISK1-part2"
-    
-    elif [ -z "$EFI" ] && [ -n "$BIOS" ]
-    then
-
-        export EXT4ROOT="$DISK1-part1"
-
     fi
-    
-else
-	echo "Failed to setup disks correctly"
-	exit 1
+
 fi
 
 if [ -n "$ZFS" ]

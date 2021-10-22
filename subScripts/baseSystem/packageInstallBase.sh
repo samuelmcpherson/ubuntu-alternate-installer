@@ -26,5 +26,3 @@ if [ -n "$SECUREBOOT" ]
 then
     chroot $TEMPMOUNT /bin/bash -c "apt -y install shim shim-signed && echo '---> apt install shim-signed succeeded <--------------------------------------------------------------' || { echo 'apt install shim-signed failed'; exit 1; }" || exit 1
 fi
-
-#chroot $TEMPMOUNT /bin/bash -c "apt -y remove --purge os-prober"

@@ -39,14 +39,6 @@ then
 
     zfs mount -a && echo "---> mounted all ZFS datasets successfully <--------------------------------------------------------------" || { echo "failed to mount all ZFS datasets"; exit 1; }
 
-#elif [ -z "$ZFS" ] && [ -n "$EFI" ] && [ -z "$BIOS" ]
-#then
-
-
-
-#elif [ -z "$ZFS" ] && [ -z "$EFI" ] && [ -n "$BIOS" ]
-#then
-
 
 fi
 

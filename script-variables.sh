@@ -4,7 +4,29 @@
 
 export SCRIPTDIR=$(pwd)
 
+export EFI=yes
+
+export BIOS=
+
+export MANUAL_LAYOUT=
+
+export ZFS=yes
+
+export MIRROR=mirror
+
+export ZFSPART= 
+
+export EFIPART=
+
+export DISK1=/dev/disk/by-id/
+
+export DISK2=/dev/disk/by-id/
+
 export TEMPMOUNT=/mnt
+
+export LOGDIR="/logs/$HOSTNAME"
+
+export OUTPUTLOG="$LOGDIR/$HOSTNAME-$(date -I)"
 
 export CONFIGREPO="https://github.com/samuelmcpherson/config-files.git"
 # This variable is used for bringing in configuration files present in a separate repository, this will be cloned in the configured user's home directory
@@ -23,43 +45,21 @@ export DOMAIN=housenet.lan
 
 export NETDEVICE=enp0s25
 
-export STATIC=
+    export DHCP=yes
 
-export IP=
+    export STATIC=
 
-export NETMASK=24
+    export IP=
 
-export GATEWAY=192.168.10.1
+    export NETMASK=24
 
-export DHCP=yes
-
-export BIOS=
-
-export EFI=yes
-
-export ZFS=yes
-
-# existing partitions
-
-    export EFIPART=
-
-    export RPART=
-
-# Format and partition whole disk(s)
-
-    export MIRROR=mirror
-
-    export DISK1=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S2RANB0HA26883V
-
-    export DISK2=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21HNXAGB51863E
+    export GATEWAY=192.168.10.1
 
 export RELEASE=bookworm # groovy, focal or hirsute
 
 export LANG=en_US.UTF-8
 
 export TIMEZONE=America/Los_Angeles
-
-export SECUREBOOT=
 
 # extra variables to futher customize the install after a minimal base is in place
 

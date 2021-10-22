@@ -2,7 +2,7 @@
 
 # takes input $DISK1-part3 as $1 (and $DISK2-part3 as $2 for mirror setups) for full disk format installs
 
-# takes input $RPART as $1 for no drive formatting installs 
+# takes input $ZFSPART as $1 for no drive formatting installs 
 
 
 
